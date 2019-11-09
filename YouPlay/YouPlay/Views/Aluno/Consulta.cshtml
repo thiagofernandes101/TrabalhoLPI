@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12" style="padding-top: 10%">
+    <div class="card mb-12">
+        <div class="card-header py-3 p-3 bg-gray-400">
+            <h2 class="text-center">Consulta de Alunos</h2>
+
+            <div class="card-body">
+                <div>
+                    <form method="post" action="Pesquisar">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Código</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Nome</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Data de matrícula</label>
+                                        <input type="date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Disciplina</label>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <button id="btn_pesquisar" class="btn btn-info" type="submit">Pesquisar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+                @if (ViewBag.ConsultaAluno == null)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="text-danger">Nenhum dado encontrado</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>Data de matrícula</th>
+                                    <th>Disciplina</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.TabelaAluno)
+                                {
+                                    <tr>
+                                        <td>@item.Codigo</td>
+                                        <td>@item.Nome</td>
+                                        <td>@item.DataMatricula</td>
+                                        <td>item.Disciplina</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

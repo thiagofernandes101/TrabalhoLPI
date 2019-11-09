@@ -1,0 +1,215 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Escola de música YouplaY
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/fontawesome/css/all.css" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/now-ui-kit.css" />
+</head>
+
+<body class="index-page sidebar-collapse">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent" color-on-scroll="400">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="/Home/Index" data-placement="bottom">
+                    YouplaY
+                </a>
+                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar top-bar"></span>
+                    <span class="navbar-toggler-bar middle-bar"></span>
+                    <span class="navbar-toggler-bar bottom-bar"></span>
+                </button>
+            </div>
+            <div id="inicio">
+                <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="../../img/blurred-image-1.jpg">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#incio" @*onclick="scrollToDownload()"*@>Inicial</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sobre" @*onclick="scrollToDownload()*@>Sobre</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink1" data-toggle="dropdown">
+                                <i class="now-ui-icons design_app"></i>
+                                <p>Classes</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink1">
+                                <a class="dropdown-item" href="./index.html">
+                                    Violino
+                                </a>
+                                <a class="dropdown-item" target="_blank" href="">
+                                    Guitarra
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-neutral" href="/Login/Index">
+                                <i class="now-ui-icons users_single-02"></i>
+                                <p>Login</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="Nos siga no Twitter" data-placement="bottom" href="https://twitter.com/" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                                <p class="d-lg-none d-xl-none">Twitter</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="Nos curta no Facebook" data-placement="bottom" href="https://www.facebook.com/" target="_blank">
+                                <i class="fab fa-facebook-square"></i>
+                                <p class="d-lg-none d-xl-none">Facebook</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" rel="tooltip" title="Nos siga no Instagram" data-placement="bottom" href="https://www.instagram.com/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                                <p class="d-lg-none d-xl-none">Instagram</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="wrapper">
+        <div class="page-header clear-filter" filter-color="orange">
+            <div class="page-header-image" data-parallax="true" style="background-image:url('../../img/001img.jpg');">
+            </div>
+            <div class="container">
+                <div class="content-center brand">
+                    <img class="n-logo" src="~/img/Saxlogo.png" alt="">
+                    <h1 class="h1-seo">YouplaY</h1>
+                    <h3>A melhor escola de música do Brasil.</h3>
+                </div>
+                <!--<h6 class="category category-absolute">Designed by
+                  <a href="http://invisionapp.com/" target="_blank">
+                    <img src="./assets/img/invision-white-slim.png" class="invision-logo" />
+                  </a>. Coded by
+                  <a href="https://www.creative-tim.com" target="_blank">
+                    <img src="./assets/img/creative-tim-white-slim2.png" class="creative-tim-logo" />
+                  </a>.</h6>-->
+            </div>
+        </div>
+
+        <div class="main">
+            <div id="sobre">
+                <div class="section">
+                    <div class="container">
+                        <div class="title">
+                            <h1>Sobre</h1>
+                        </div>
+                        <div>
+                            <section>
+                                <h2>Projeto</h2>
+                                <h4>
+                                    O projeto escolhido se trata de um gerenciamento de alunos, professores e aulas de uma escola de música e tem como objetivo colocar em
+                                    prática os conhecimentos passados em aula.
+                                </h4>
+                                <h4>
+                                    Os CRUD's desenvolvidos são de aluno, professor e aulas em que, na tela de alunos, é possível cadastrar os alunos matriculados e consultá-los
+                                    a partir dos filtros de código, nome, data de matrícula e aulas em que o aluno está cadastrado.
+                                </h4>
+                                <h4>
+                                    A tela de professor funcionará semelhante a tela de alunos, em que é possível fazer o cadastro e consulta de professores, tendo como filtros
+                                    na tela de consulta, o código, nome e aulas em que o professor está cadastrado.
+                                </h4>
+                                <h4>
+                                    Na tela de aulas, será possível realizar o cadastro e consulta de aulas com os respectivos professores que as ministrarão, assim como será
+                                    possível que um aluno se cadastre em uma aula de seu interesse, sendo que o aluno não poderá se cadastrar em uma matéria mais de uma vez, mesmo
+                                    em horários diferentes, cada horário de aula poderá ter apenas um professor ministrando-a.
+                                </h4>
+                                <h4>
+                                    As telas serão disponibilizadas de acordo com a permissão acesso de login do usuário e, caso o usuário não tenha sido cadastrado, será
+                                    remetido diretamente para a tela de login.
+                                </h4>
+                                <h4>
+                                    O cadastro de um novo usuário deverá ser cadastrado pelo administrador da aplicação.
+                                </h4>
+                            </section>
+                            <section>
+                                <h2>Desenvolvedores</h2>
+                                <ul>
+                                    <li><h4>Marcelo Max RA: 082170021</h4></li>
+                                    <li><h4>Thiago Fernandes RA: 082170029</h4></li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer" data-background-color="black">
+            <div class=" container ">
+                <nav>
+                    <ul>
+
+                        <li>
+                            <a href="">
+                                Sobre Nós
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <div class="copyright" id="copyright">
+                    &copy;
+                    <script>
+                        document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                    </script>, Designed by
+                    <a href="" target="_blank">Marcelo & Thiago </a>. Coded by
+                    <a href="" target="_blank">Marcelo & Thiago</a>.
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--   Core JS Files   -->
+    <script type="text/javascript" src="~/Scripts/core/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/core/popper.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/core/bootstrap.min.js"></script>
+
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrap-switch.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script type="text/javascript" src="~/Scripts/plugins/nouislider.min.js"></script>
+    <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+    <script type="text/javascript" src="~/Scripts/plugins/bootstrap-datepicker.js"></script>
+    
+    <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+    <script type="text/javascript" src="~/Scripts/now-ui-kit.js?v=1.3.0"></script>
+
+    <script>
+       
+
+        function scrollToDownload() {
+
+            if ($('.section-download').length != 0) {
+                $("html, body").animate({
+                    scrollTop: $('.section-download').offset().top
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>

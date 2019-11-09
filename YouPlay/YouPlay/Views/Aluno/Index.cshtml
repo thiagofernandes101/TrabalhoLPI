@@ -1,0 +1,211 @@
+﻿@model YouPlay.Models.AlunoViewModel
+
+<form id="form_aluno" class="form-horizontal" method="post" action="Salvar">
+    <fieldset>
+        <div class="col-md-12 " style="margin-top: 10%">
+            <div  class="card mb-12" >
+                <div class="card-header py-3 p-3 bg-gray-400"><h2 class="text-center">Cadastro Aluno</h2></div>
+
+                <div class="card-body">
+                    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+                    <!-- Cadastro aluno -->
+                    <div class="col-sm-2">
+
+                        @*<div class="col-sm-2">
+                            <div class="form-group row">
+                                <div class="col-md-2">
+                                    <img class="rounded-circle img-raised" alt="Thumbnail Image" src="../../img/julie.jpg" name="imgfunc">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-5 control-label"> </label>
+                                <input type="file" name="arquivo" id="arquivoImagem" class="btn btn-primary" onchange="previewImagem()">
+                            </div>
+                        </div>*@
+
+
+                        <div class="form-group row">
+                            <img id="imgPreview" class="rounded-circle img-raised" alt="Thumbnail Image" src="../../img/julie.jpg" name="ïmgPreview" />
+                        </div>
+                        <div class="form-group row">
+                            <input type="file" id="Imagem" name="Imagem" onchange="verImagem()" class="btn btn-primary" value="Cadastrar imagem" >
+                            <button type="button" class="btn btn-primary" name="Imagem" id="btn_carregar_img"  onchange="verImagem();">Carregar Imgem</button>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <!-- Nome aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="Nome">Nome *</label>
+                            <input id="Nome" name="Nome" class="form-control input-md" type="text" required>
+                        </div>
+                        
+                        <!-- Nascimento aluno -->
+                        <div class="col-md-6 datepicker-container">
+                            <label class="col-md-12 control-label" for="DataNascimento">Nascimento *</label>
+                            <input id="DataNascimento" name="DataNascimento" placeholder="DD/MM/AAAA" class="form-control" type="date" required>  @*class="form-control date-picker" type="text" data-datepicker-color="primary" minlength="10" maxlength="10" onkeypress="formatar('##/##/####', this)" onblur="show_hide_responsavel()"*@
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <!-- RG aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="Rg">RG</label>
+                            <input id="Rg" name="Rg" placeholder="Apenas números" class="form-control input-md" type="text" minlength="9" maxlength="9" pattern="[0-9]+$">
+                        </div>
+
+                        <!-- CPF aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="cpf">CPF</label>
+                            <input id="Cpf" name="Cpf" placeholder="Apenas números" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <!-- Sexo aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="Genero">Genero *</label>
+                            <select id="Genero" name="Genero" class="form-control input-md" required>
+                                <option value="0">Selecione</option>
+                                <option value="1">Feminino</option>
+                                <option value="2">Masculino</option>
+                            </select>
+                        </div>
+
+                        <!-- Telefones aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="Telefone">Telefone *</label>
+                            <input id="Telefone" name="Telefone" class="form-control" placeholder="XX XXXXX-XXXX" type="text" maxlength="13" pattern="[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$" OnKeyPress="formatar('## #####-####', this)" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <!-- Email aluno -->
+                        <div class="col-md-12">
+                            <label class="col-md-12 control-label" for="Email">Email</label>
+                            <div class="input-group">
+                                <input id="Email" name="Email" class="form-control" placeholder="email@email.com" type="email">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CEP aluno -->
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="col-md-12 control-label" for="cep">CEP *</label>
+                            <input id="cep" name="Cep" placeholder="Apenas números" class="form-control input-md" type="search" minlength="8" maxlength="8" pattern="[0-9]+$" required>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="col-md-6 control-label"> </label>
+                            <button type="button" class="btn btn-primary" id="btn_pesquisar_cep" onclick="pesquisacep(cep.value)">Pesquisar</button>
+                        </div>
+                    </div>
+
+                    <!-- Endereço aluno -->
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <div>Endereço</div>
+
+                            <div class="">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <span class="input-group-addon">Rua</span>
+                                        <input id="rua" name="Rua" class="form-control" type="text" required readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="input-group-addon">Nº <h11>*</h11></span>
+                                        <input id="numero" name="Numero" class="form-control" type="text" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="input-group-addon">Bairro</span>
+                                        <input id="bairro" name="Bairro" class="form-control" type="text" required readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <span class="input-group-addon">Cidade</span>
+                                        <input id="cidade" name="Cidade" class="form-control" type="text" required readonly>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span class="input-group-addon">Estado</span>
+                                        <input id="estado" name="Estado" class="form-control" type="text" required readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Escolaridade aluno -->
+                    <div class="form-group row">
+                        <div class="col-md-4" id="escolaridade">
+                            <label class="col-md-12 control-label" for="CodigoEscolaridade">Escolaridade *</label>
+                            <select id="CodigoEscolaridade" name="CodigoEscolaridade" class="form-control input-md" required>
+                                @foreach (var item in ViewBag.Escolaridade)
+                                {
+                                    <option value="@item.Codigo" selected="@item.Codigo.Equals(Model.CodigoEscolaridade)">@item.Descricao</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Cadastro reponsável -->
+                    <div id="newpost">
+                        <div class="form-group row">
+                            <div class="col-md-12 control-label">
+                                <h3>Responsável</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- Nome responsável -->
+                            <div class="col-md-8">
+                                <label class="col-md-12 control-label" for="nome_responsavel">Nome *</label>
+                                <input id="nome_responsavel" name="NomeResponsavel" class="form-control input-md" type="text" required>
+                            </div>
+
+                            <!-- Vinculo responsável -->
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="vinculo">Vinculo com Aluno *</label>
+                                <select id="vinculo" name="CodigoVinculoResponsavel" class="form-control input-md" required>
+                                    @foreach (var item in ViewBag.VinculoAluno)
+                                    {
+                                        <option value="@item.CodigoVinculoResponsavel" selected="@item.Codigo.Equals(Model.CodigoVinculoResponsavel)">@item.DescricaoVinculoResponsavel</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <!-- RG responsável -->
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="rg_responsavel">RG</label>
+                                <input id="rg_responsavel" name="RgResponsavel" class="form-control" placeholder="Apenas numeros" type="text" minlength="9" maxlength="9" pattern="[0-9]+$" required>
+                            </div>
+
+                            <!-- CPF responsável -->
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="cpf_responsavel">CPF</label>
+                                <input id="cpf_responsavel" name="CpfResponsavel" class="form-control" placeholder="Apenas numeros" type="text" minlength="11" maxlength="11" pattern="[0-9]+$" required>
+                            </div>
+
+                            <!-- Telefones responsável -->
+                            <div class="col-md-4">
+                                <label class="col-md-12 control-label" for="telefone_responsavel_1">Celular *</label>
+                                <input id="telefone_responsavel_1" name="TelefoneResponsavel" class="form-control" placeholder="XX XXXXX-XXXX" type="text" maxlength="13" pattern="[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$" OnKeyPress="formatar('## #####-####', this)" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botões Cadastrar e Cancelar -->
+                    <div class="form-group row">
+                        <div class="col-md-8">
+                            <button id="btn_cadastrar_aluno" class="btn btn-success" type="submit">Cadastrar</button>
+                            <button id="btn_cancelar" class="btn btn-danger" type="reset">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
