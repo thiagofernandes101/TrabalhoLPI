@@ -9,7 +9,7 @@ using YouPlay.Models;
 namespace YouPlay.Controllers
 {
     [AutorizacaoFilter]
-    public class AulaController : PadraoController<AulaViewModel>
+    public class AulaController : PadraoController<DisciplinaViewModel>
     {
         // GET: Aula
         public override ActionResult Consulta()

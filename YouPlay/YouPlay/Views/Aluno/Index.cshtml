@@ -171,7 +171,7 @@
                                 <select id="vinculo" name="CodigoVinculoResponsavel" class="form-control input-md" required>
                                     @foreach (var item in ViewBag.VinculoAluno)
                                     {
-                                        <option value="@item.CodigoVinculoResponsavel" selected="@item.Codigo.Equals(Model.CodigoVinculoResponsavel)">@item.DescricaoVinculoResponsavel</option>
+                                        <option value="@item.Codigo" selected="@item.Codigo.Equals(Model.CodigoVinculoResponsavel)">@item.Descricao</option>
                                     }
                                 </select>
                             </div>

@@ -43,8 +43,8 @@ namespace YouPlay.Controllers
         {
             AlunoDAO dao = new AlunoDAO();
 
-            List<EscolaridadeViewModel> listaEscolaridade = dao.ObtemEscolaridade();
-            List<VinculoViewModel> listaVinculoAluno = dao.ObtemVinculoAluno();
+            List<PadraoViewBagSelect> listaEscolaridade = dao.ObtemEscolaridade();
+            List<PadraoViewBagSelect> listaVinculoAluno = dao.ObtemVinculoAluno();
 
             ViewBag.Escolaridade = listaEscolaridade;
             ViewBag.VinculoAluno = listaVinculoAluno;

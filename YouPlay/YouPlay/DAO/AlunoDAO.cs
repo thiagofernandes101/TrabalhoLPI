@@ -20,9 +20,9 @@ namespace YouPlay.DAO
             parametros[4] = new SqlParameter("idade", model.Idade);
             parametros[5] = new SqlParameter("rg", model.Rg);
             parametros[5] = new SqlParameter("cpf", model.Cpf);
-            parametros[6] = new SqlParameter("codigoEscolaridade", model.Escolaridade.Codigo);
+            parametros[6] = new SqlParameter("codigoEscolaridade", model.CodigoEscolaridade);
             parametros[7] = new SqlParameter("dataMatricula", model.DataMatricula);
-            parametros[8] = new SqlParameter("rua", model.Endereco.Rua);
+            parametros[8] = new SqlParameter("rua", model.Rua);
 
             return parametros;
         }
@@ -51,16 +51,16 @@ namespace YouPlay.DAO
             Tabela = "Alunos";
         }
 
-        public List<EscolaridadeViewModel> ObtemEscolaridade()
+        public List<PadraoViewBagSelect> ObtemEscolaridade()
         {
             try
             {
-                var tabela = HelperDAO.ExecutaProcSelect("spObtemEscolaridade", null);
-                List<EscolaridadeViewModel> lista = new List<EscolaridadeViewModel>();
+                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_escolaridade", null);
+                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
 
                 foreach (DataRow registro in tabela.Rows)
                 {
-                    EscolaridadeViewModel escolaridade = new EscolaridadeViewModel
+                    PadraoViewBagSelect escolaridade = new PadraoViewBagSelect
                     {
                         Codigo = Convert.ToInt32(registro["Codigo"]),
                         Descricao = registro["Descricao"].ToString()
@@ -76,16 +76,16 @@ namespace YouPlay.DAO
             }
         }
 
-        public List<VinculoViewModel> ObtemVinculoAluno()
+        public List<PadraoViewBagSelect> ObtemVinculoAluno()
         {
             try
             {
-                var tabela = HelperDAO.ExecutaProcSelect("spObtemVinculoAluno", null);
-                List<VinculoViewModel> lista = new List<VinculoViewModel>();
+                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_vinculo_aluno", null);
+                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
 
                 foreach (DataRow registro in tabela.Rows)
                 {
-                    VinculoViewModel vinculo = new VinculoViewModel
+                    PadraoViewBagSelect vinculo = new PadraoViewBagSelect
                     {
                         Codigo = Convert.ToInt32(registro["codigo"]),
                         Descricao = registro["descricao"].ToString()

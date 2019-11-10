@@ -23,12 +23,12 @@ namespace YouPlay.DAO
 
         public virtual void Insert(T model)
         {
-            HelperDAO.ExecutaProc("spInsert_" + Tabela, CriaParametros(model));
+            HelperDAO.ExecutaProc("sp_insert_" + Tabela, CriaParametros(model));
         }
 
         public virtual void Update(T model)
         {
-            HelperDAO.ExecutaProc("spUpdate_" + Tabela, CriaParametros(model));
+            HelperDAO.ExecutaProc("sp_update_" + Tabela, CriaParametros(model));
         }
 
         public virtual void Delete(int codigo)
@@ -39,7 +39,7 @@ namespace YouPlay.DAO
                 new SqlParameter("tabela", Tabela)
             };
 
-            HelperDAO.ExecutaProc("spDelete", p);
+            HelperDAO.ExecutaProc("sp_delete", p);
         }
 
         public virtual T Consulta(int codigo)
@@ -50,7 +50,7 @@ namespace YouPlay.DAO
                 new SqlParameter("tabela", Tabela)
             };
 
-            var tabela = HelperDAO.ExecutaProcSelect("spConsulta", p);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_consulta", p);
 
             if (tabela.Rows.Count == 0)
             {
@@ -70,7 +70,7 @@ namespace YouPlay.DAO
                 new SqlParameter("tabela", Tabela)
             };
 
-            var tabela = HelperDAO.ExecutaProcSelect("spProximoId", p);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_proximo_id", p);
 
 
             return Convert.ToInt32(tabela.Rows[0][0]);
@@ -84,7 +84,7 @@ namespace YouPlay.DAO
                 new SqlParameter("Ordem", "1") // 1 é o primeiro campo da tabela, ou seja, a chave primária
             };
 
-            var tabela = HelperDAO.ExecutaProcSelect("spListagem", p);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_listagem", p);
             List<T> lista = new List<T>();
 
             foreach (DataRow registro in tabela.Rows)

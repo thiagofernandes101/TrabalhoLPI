@@ -1854,6 +1854,7 @@
     </Compile>
     <Compile Include="Models\AlunoViewModel.cs" />
     <Compile Include="Models\DisciplinaViewModel.cs" />
+    <Compile Include="Models\PadraoViewBagSelect.cs" />
     <Compile Include="Models\PadraoViewModel.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\ProfessorViewModel.cs" />
