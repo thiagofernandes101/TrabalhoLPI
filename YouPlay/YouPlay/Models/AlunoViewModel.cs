@@ -23,6 +23,5 @@ namespace YouPlay.Models
         [Required(ErrorMessage = "Selecione o vinculo do aluno com o responsável")]
         public int CodigoVinculoResponsavel { get; set; }
         public string DescricaoVinculoResponsavel { get; set; }
-        public byte[] Imagem { get; set; }
     }
 }

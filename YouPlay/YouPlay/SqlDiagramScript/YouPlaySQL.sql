@@ -279,7 +279,7 @@ begin
 END
 GO
 
-create procedure spConsulta
+CREATE procedure spConsulta
 (
 @id int ,
 @tabela varchar(max)

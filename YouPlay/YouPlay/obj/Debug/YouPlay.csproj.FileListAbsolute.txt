@@ -205,3 +205,7 @@ C:\Users\thiag\OneDrive\Área de Trabalho\YouPlay\YouPlay\obj\Debug\YouPlay.cspr
 C:\Users\thiag\OneDrive\Área de Trabalho\YouPlay\YouPlay\obj\Debug\YouPlay.csproj.CopyComplete
 C:\Users\thiag\OneDrive\Área de Trabalho\YouPlay\YouPlay\obj\Debug\YouPlay.dll
 C:\Users\thiag\OneDrive\Área de Trabalho\YouPlay\YouPlay\obj\Debug\YouPlay.pdb
+C:\Users\thiag\OneDrive\Área de Trabalho\TrabalhoLPI\YouPlay\YouPlay\obj\Debug\YouPlay.csprojAssemblyReference.cache
+C:\Users\thiag\OneDrive\Área de Trabalho\TrabalhoLPI\YouPlay\YouPlay\obj\Debug\YouPlay.csproj.CoreCompileInputs.cache
+C:\Users\thiag\OneDrive\Área de Trabalho\TrabalhoLPI\YouPlay\YouPlay\obj\Debug\YouPlay.dll
+C:\Users\thiag\OneDrive\Área de Trabalho\TrabalhoLPI\YouPlay\YouPlay\obj\Debug\YouPlay.pdb
