@@ -12,24 +12,31 @@ namespace YouPlay.DAO
     {
         protected override SqlParameter[] CriaParametros(ProfessorViewModel model)
         {
-            SqlParameter[] parametros = new SqlParameter[18];
+            //object imgByte = model.ImageByte();
+
+            //if (imgByte == null)
+            //{
+            //    imgByte = DBNull.Value;
+            //}
+
+            SqlParameter[] parametros = new SqlParameter[16];
             parametros[0] = new SqlParameter("codigo", model.Codigo);
             parametros[1] = new SqlParameter("nome", model.Nome);
             parametros[2] = new SqlParameter("genero", model.Genero);
             parametros[3] = new SqlParameter("data_nascimento", model.DataNascimento);
-            parametros[5] = new SqlParameter("idade", model.Idade);
-            parametros[6] = new SqlParameter("rg", model.Rg);
-            parametros[7] = new SqlParameter("cpf", model.Cpf);
-            parametros[8] = new SqlParameter("email", model.Email);
-            parametros[9] = new SqlParameter("codigo_status", model.CodigoStatus);
-            parametros[10] = new SqlParameter("imagem", model.Imagem);
-            parametros[11] = new SqlParameter("rua", model.Rua);
-            parametros[12] = new SqlParameter("numero", model.Numero);
-            parametros[13] = new SqlParameter("bairro", model.Bairro);
-            parametros[14] = new SqlParameter("cidade", model.Cidade);
-            parametros[15] = new SqlParameter("estado", model.Estado);
-            parametros[16] = new SqlParameter("cep", model.Cep);
-            parametros[17] = new SqlParameter("telefone", model.Telefone);
+            parametros[4] = new SqlParameter("idade", model.Idade);
+            parametros[5] = new SqlParameter("rg", model.Rg);
+            parametros[6] = new SqlParameter("cpf", model.Cpf);
+            parametros[7] = new SqlParameter("email", model.Email);
+            parametros[8] = new SqlParameter("codigo_status", model.CodigoStatus);
+            parametros[9] = new SqlParameter("rua", model.Rua);
+            parametros[10] = new SqlParameter("numero", model.Numero);
+            parametros[11] = new SqlParameter("bairro", model.Bairro);
+            parametros[12] = new SqlParameter("cidade", model.Cidade);
+            parametros[13] = new SqlParameter("estado", model.Estado);
+            parametros[14] = new SqlParameter("cep", model.Cep);
+            parametros[15] = new SqlParameter("telefone", model.Telefone);
+            //parametros[17] = new SqlParameter("imagem", model.Imagem);
 
             return parametros;
         }
@@ -48,7 +55,8 @@ namespace YouPlay.DAO
                 Email = registro["email"] != DBNull.Value ? registro["email"].ToString() : string.Empty,
                 CodigoStatus = registro["codigo_status"] != DBNull.Value ? Convert.ToInt32(registro["codigo_status"]) : 0,
                 DescricaoStatus = registro["descricao_status"] != DBNull.Value ? registro["descricao_status"].ToString() : string.Empty,
-                Imagem = registro["imagem"] != DBNull.Value ? registro["imagem"].ToString() : string.Empty,
+                //ImagemEmByte = registro["imagem"] != DBNull.Value ? registro["imagem"] as byte[] : null,
+                //ImageBase64 = registro["imagem"] != DBNull.Value ? Convert.ToBase64String(registro["imagem"] as byte[]) : null,
 
                 Rua = registro["rua"] != DBNull.Value ? registro["rua"].ToString() : string.Empty,
                 Numero = registro["numero"] != DBNull.Value ? Convert.ToInt32(registro["numero"]) : 0,
@@ -57,6 +65,7 @@ namespace YouPlay.DAO
                 Estado = registro["estado"] != DBNull.Value ? registro["estado"].ToString() : string.Empty,
                 Cep = registro["cep"] != DBNull.Value ? Convert.ToInt32(registro["cep"]) : 0,
                 Telefone = registro["telefone"] != DBNull.Value ? registro["telefone"].ToString() : string.Empty,
+                DescricaoDisciplina = registro["descricao_disciplina"] != DBNull.Value ? registro["descricao_disciplina"].ToString() : string.Empty
             };
 
             return professor;
@@ -67,34 +76,34 @@ namespace YouPlay.DAO
             Tabela = "Professor";
         }
 
-        public virtual List<PadraoViewBagSelect> ListagemStatus()
-        {
-            try
-            {
-                var p = new SqlParameter[]
-                {
-                    new SqlParameter("tabela", "professor_status")
-                };
+        //public virtual List<PadraoViewBagSelect> ListagemStatus()
+        //{
+        //    try
+        //    {
+        //        var p = new SqlParameter[]
+        //        {
+        //            new SqlParameter("tabela", "professor_status")
+        //        };
 
-                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);
-                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
+        //        var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);
+        //        List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
 
-                foreach (DataRow registro in tabela.Rows)
-                {
-                    PadraoViewBagSelect padraoBag = new PadraoViewBagSelect
-                    {
-                        Codigo = Convert.ToInt32(registro["codigo"]),
-                        Descricao = registro["descricao"].ToString()
-                    };
-                    lista.Add(padraoBag);
-                }
+        //        foreach (DataRow registro in tabela.Rows)
+        //        {
+        //            PadraoViewBagSelect padraoBag = new PadraoViewBagSelect
+        //            {
+        //                Codigo = Convert.ToInt32(registro["codigo"]),
+        //                Descricao = registro["descricao"].ToString()
+        //            };
+        //            lista.Add(padraoBag);
+        //        }
 
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //        return lista;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

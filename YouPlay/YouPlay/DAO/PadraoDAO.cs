@@ -23,7 +23,7 @@ namespace YouPlay.DAO
 
         public virtual void Insert(T model)
         {
-            HelperDAO.ExecutaProc("sp_insert_" + Tabela, CriaParametros(model));
+            HelperDAO.ExecutaProc("sp_inserir_" + Tabela, CriaParametros(model));
         }
 
         public virtual void Update(T model)
@@ -46,11 +46,10 @@ namespace YouPlay.DAO
         {
             var p = new SqlParameter[]
             {
-                new SqlParameter("codigo", codigo),
-                new SqlParameter("tabela", Tabela)
+                new SqlParameter("codigo", codigo)
             };
 
-            var tabela = HelperDAO.ExecutaProcSelect("sp_consulta", p);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_consulta_" + Tabela, p);
 
             if (tabela.Rows.Count == 0)
             {
@@ -78,13 +77,7 @@ namespace YouPlay.DAO
 
         public virtual List<T> Listagem()
         {
-            var p = new SqlParameter[]
-            {
-                new SqlParameter("tabela", Tabela),
-                new SqlParameter("Ordem", "1") // 1 é o primeiro campo da tabela, ou seja, a chave primária
-            };
-
-            var tabela = HelperDAO.ExecutaProcSelect("sp_listagem", p);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_listagem_" + Tabela, null);
             List<T> lista = new List<T>();
 
             foreach (DataRow registro in tabela.Rows)
@@ -93,6 +86,36 @@ namespace YouPlay.DAO
             }
 
             return lista;
+        }
+
+        public virtual List<PadraoViewBagSelect> ListagemStatus()
+        {
+            try
+            {
+                var p = new SqlParameter[]
+                {
+                    new SqlParameter("tabela", Tabela + "_status")
+                };
+
+                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);
+                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
+
+                foreach (DataRow registro in tabela.Rows)
+                {
+                    PadraoViewBagSelect padraoBag = new PadraoViewBagSelect
+                    {
+                        Codigo = Convert.ToInt32(registro["codigo"]),
+                        Descricao = registro["descricao"].ToString()
+                    };
+                    lista.Add(padraoBag);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

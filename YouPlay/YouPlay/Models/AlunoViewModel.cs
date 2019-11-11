@@ -11,7 +11,7 @@ namespace YouPlay.Models
         [Required(ErrorMessage = "Insira o telefone do aluno")]
         public string Telefone { get; set; }
 
-        public DateTime DataMatricula { get; set; }
+        public DateTime DataMatricula { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Selecione a escolaridade")]
         public int CodigoEscolaridade { get; set; }
@@ -36,5 +36,7 @@ namespace YouPlay.Models
         public int CodigoStatus { get; set; }
 
         public string DescricaoStatus { get; set; }
+
+        public string DescricaoDisciplina { get; set; }
     }
 }

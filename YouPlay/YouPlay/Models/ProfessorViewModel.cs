@@ -12,5 +12,7 @@ namespace YouPlay.Models
         public string DescricaoStatus { get; set; }
 
         public string Telefone { get; set; }
+
+        public string DescricaoDisciplina { get; set; }
     }
 }

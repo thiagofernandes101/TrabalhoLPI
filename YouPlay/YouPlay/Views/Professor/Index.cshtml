@@ -1,4 +1,4 @@
-﻿
+﻿@model YouPlay.Models.ProfessorViewModel
 
 <form id="form_aluno" class="form-horizontal" method="post" action="Salvar">
     <fieldset>
@@ -24,13 +24,13 @@
                         <!-- Nome professor -->
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="Nome">Nome <h11>*</h11></label>
-                            <input id="Nome" name="Nome" class="form-control input-md" type="text" required>
+                            <input id="Nome" name="Nome" value="@Model.Nome" class="form-control input-md" type="text" required>
                         </div>
 
                         <!-- Nascimento professor -->
                         <div class="col-md-6 datepicker-container">
                             <label class="col-md-12 control-label" for="DataNascimento">Nascimento <h11>*</h11></label>
-                            <input id="DataNascimento" name="DataNascimento" placeholder="DD/MM/AAAA" class="form-control date-picker" type="datetime" data-datepicker-color="primary" minlength="10" maxlength="10" onkeypress="formatar('##/##/####', this)" onblur="show_hide_responsavel()" required>
+                            <input id="DataNascimento" name="DataNascimento" value="@Model.DataNascimento" placeholder="DD/MM/AAAA" class="form-control date-picker" type="datetime" data-datepicker-color="primary" minlength="10" maxlength="10" onkeypress="formatar('##/##/####', this)" onblur="show_hide_responsavel()" required>
                         </div>
                     </div>
 
@@ -38,13 +38,13 @@
                         <!-- RG professor -->
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="Rg">RG</label>
-                            <input id="Rg" name="Rg" placeholder="Apenas números" class="form-control input-md" type="text" minlength="9" maxlength="9" pattern="[0-9]+$">
+                            <input id="Rg" name="Rg" value="@Model.Rg" placeholder="Apenas números" class="form-control input-md" type="text" minlength="9" maxlength="9" pattern="[0-9]+$">
                         </div>
 
                         <!-- CPF professor -->
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="cpf">CPF</label>
-                            <input id="Cpf" name="Cpf" placeholder="Apenas números" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$">
+                            <input id="Cpf" name="Cpf" value="@Model.Cpf" placeholder="Apenas números" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$">
                         </div>
                     </div>
 
@@ -71,17 +71,28 @@
                         <!-- Telefones professor -->
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="Telefone">Telefone <h11>*</h11></label>
-                            <input id="Telefone" name="Telefone" class="form-control" placeholder="XX XXXXX-XXXX" type="text" maxlength="13" pattern="[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$" OnKeyPress="formatar('## #####-####', this)" required>
+                            <input id="Telefone" name="Telefone" value="@Model.Telefone" class="form-control" placeholder="XX XXXXX-XXXX" type="text" maxlength="13" pattern="[0-9]{2}\ [0-9]{4,6}-[0-9]{3,4}$" OnKeyPress="formatar('## #####-####', this)" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <!-- Email professor -->
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="col-md-12 control-label" for="Email">Email</label>
                             <div class="input-group">
-                                <input id="Email" name="Email" class="form-control" placeholder="email@email.com" type="email">
+                                <input id="Email" name="Email" value="@Model.Email" class="form-control" placeholder="email@email.com" type="email">
                             </div>
+                        </div>
+
+                        <!-- Status do aluno -->
+                        <div class="col-md-6">
+                            <label class="col-md-12 control-label" for="Status">Status</label>
+                            <select id="Status" name="CodigoStatus" class="form-control input-md" required>
+                                @foreach (var item in ViewBag.Status)
+                                {
+                                    <option value="@item.Codigo" selected="@item.Codigo.Equals(Model.CodigoStatus)">@item.Descricao</option>
+                                }
+                            </select>
                         </div>
 
                     </div>
@@ -89,7 +100,7 @@
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="col-md-12 control-label" for="cep">CEP <h11>*</h11></label>
-                            <input id="cep" name="Endereco.Cep" placeholder="Apenas números" class="form-control input-md" type="search" minlength="8" maxlength="8" pattern="[0-9]+$" required>
+                            <input id="cep" name="Endereco.Cep" value="@Model.Cep" placeholder="Apenas números" class="form-control input-md" type="search" minlength="8" maxlength="8" pattern="[0-9]+$" required>
                         </div>
                         <div class="col-md-2">
                             <label class="col-md-6 control-label"> </label>
@@ -106,25 +117,25 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <span class="input-group-addon">Rua</span>
-                                        <input id="Rua" name="Endereco.Rua" class="form-control" type="text" required readonly>
+                                        <input id="rua" name="Rua" value="@Model.Rua" class="form-control" type="text" required readonly>
                                     </div>
                                     <div class="col-md-2">
                                         <span class="input-group-addon">Nº <h11>*</h11></span>
-                                        <input id="Numero" name="Endereco.Numero" class="form-control" type="text" required>
+                                        <input id="numero" name="Numero" value="@Model.Numero" class="form-control" type="text" required>
                                     </div>
                                     <div class="col-md-3">
                                         <span class="input-group-addon">Bairro</span>
-                                        <input id="Bairro" name="Endereco.Bairro" class="form-control" type="text" required readonly>
+                                        <input id="bairro" name="Bairro" value="@Model.Bairro" class="form-control" type="text" required readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-4">
                                         <span class="input-group-addon">Cidade</span>
-                                        <input id="Cidade" name="Endereco.Cidade" class="form-control" type="text" required readonly>
+                                        <input id="cidade" name="Cidade" value="@Model.Cidade" class="form-control" type="text" required readonly>
                                     </div>
                                     <div class="col-md-2">
                                         <span class="input-group-addon">Estado</span>
-                                        <input id="Estado" name="Endereco.Estado" class="form-control" type="text" required readonly>
+                                        <input id="estado" name="Estado" value="@Model.Estado" class="form-control" type="text" required readonly>
                                     </div>
                                 </div>
                             </div>

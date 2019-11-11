@@ -8,14 +8,23 @@ using YouPlay.DAO;
 
 namespace YouPlay.Controllers
 {
-    public abstract class PadraoController<T> : Controller where T : PadraoViewModel
+    public class PadraoController<T> : Controller where T : PadraoViewModel
     {
         protected PadraoDAO<T> DAO { get; set; }
         protected bool GeraProximoId { get; set; }
 
-        public abstract ActionResult Index();
+        public virtual ActionResult Index()
+        {
+            ViewBag.Operacao = "I";
+            return View();
+        }
 
-        public abstract ActionResult Consulta();
+        public virtual ActionResult Consulta()
+        {
+            List<T> listaConsulta = new List<T>();
+            listaConsulta = DAO.Listagem();
+            return View(listaConsulta);
+        }
 
         protected virtual void PreencheDadosParaView(string Operacao, T model)
         {
@@ -23,7 +32,6 @@ namespace YouPlay.Controllers
                 model.Codigo = DAO.ProximoId();
         }
 
-        [HttpPost]
         public virtual ActionResult Salvar(T model, string Operacao)
         {
             try
@@ -49,27 +57,27 @@ namespace YouPlay.Controllers
             {
                 ViewBag.Erro = "Ocorreu um erro: " + erro.Message;
                 ViewBag.Operacao = Operacao;
-                PreencheDadosParaView(Operacao, model);
+                PreencheViewBag();
                 return View("Index", model);
             }
         }
 
         protected virtual void ValidaDados(T model, string operacao)
         {
-            if (operacao == "I" && DAO.Consulta(model.Codigo) != null)
-            {
-                ModelState.AddModelError("Id", "Código já está em uso!");
-            }
+            //if (operacao == "I" && DAO.Consulta(model.Codigo) != null)
+            //{
+            //    ModelState.AddModelError("Id", "Código já está em uso!");
+            //}
 
-            if (operacao == "A" && DAO.Consulta(model.Codigo) == null)
-            {
-                ModelState.AddModelError("Id", "Este registro não existe!");
-            }
+            //if (operacao == "A" && DAO.Consulta(model.Codigo) == null)
+            //{
+            //    ModelState.AddModelError("Id", "Este registro não existe!");
+            //}
 
-            if (model.Codigo <= 0)
-            {
-                ModelState.AddModelError("Id", "Id inválido!");
-            }
+            //if (model.Codigo <= 0)
+            //{
+            //    ModelState.AddModelError("Id", "Id inválido!");
+            //}
         }
 
         public ActionResult Edit(int id)
@@ -82,7 +90,7 @@ namespace YouPlay.Controllers
                     return RedirectToAction("Consulta");
                 else
                 {
-                    PreencheDadosParaView("A", model);
+                    PreencheViewBag();
                     return View("Index", model);
                 }
             }
@@ -111,12 +119,11 @@ namespace YouPlay.Controllers
 
             List<PadraoViewBagSelect> listaEscolaridade = dao.ObtemEscolaridade();
             List<PadraoViewBagSelect> listaVinculoAluno = dao.ObtemVinculoAluno();
-            List<PadraoViewBagSelect> listaStatus = dao.ListagemStatus();
+            List<PadraoViewBagSelect> listaStatus = DAO.ListagemStatus();
 
             ViewBag.Escolaridade = listaEscolaridade;
             ViewBag.VinculoAluno = listaVinculoAluno;
             ViewBag.Status = listaStatus;
-
         }
     }
 }

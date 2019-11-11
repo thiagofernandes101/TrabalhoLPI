@@ -26,7 +26,7 @@ create table [pessoa] (
   [rg] varchar(255),
   [cpf] varchar(255),
   [email] varchar(255),
-  [foto] varbinary
+  [foto] varchar(255)
 )
 go
 
@@ -361,27 +361,39 @@ create procedure sp_inserir_endereco
 		@cep int
 	)
 as
-begin
-	insert into endereco
-	(
-		rua,
-		numero,
-		bairro,
-		cidade,
-		estado,
-		cep
-	)
-	values
-	(
-		@rua,
-		@numero,
-		@bairro,
-		@cidade,
-		@estado,
-		@cep
-	)
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		insert into endereco
+		(
+			rua,
+			numero,
+			bairro,
+			cidade,
+			estado,
+			cep
+		)
+		values
+		(
+			@rua,
+			@numero,
+			@bairro,
+			@cidade,
+			@estado,
+			@cep
+		)
+	commit
 	return scope_identity()
-end
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
 go
 
 -- procesure para inserir o usuário
@@ -390,19 +402,31 @@ create procedure sp_inserir_usuario
 		@email varchar(255)
 	)
 as
-begin
-	insert into usuario
-	(
-		usuario,
-		senha
-	)
-	values
-	(
-		@email,
-		'1234'
-	)
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		insert into usuario
+		(
+			usuario,
+			senha
+		)
+		values
+		(
+			@email,
+			'1234'
+		)
+	commit
 	return scope_identity()
-end
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
 go
 
 -- inserir na tabela pessoa
@@ -413,43 +437,54 @@ create procedure sp_inserir_pessoa
 		@nome varchar(255),
 		@genero varchar(255),
 		@data_nascimento datetime,
-		@data_matricula datetime,
 		@idade int,
 		@rg varchar(255),
 		@cpf varchar(255),
 		@email varchar(255),
-		@imagem varbinary
+		@imagem varchar
 	)
 as
-begin
-	insert into pessoa
-	(
-		codigo_endereco,
-		codigo_usuario,
-		nome,
-		genero,
-		data_nascimento,
-		idade,
-		rg,
-		cpf,
-		email,
-		foto
-	)
-	values
-	(
-		@codigo_endereco,
-		@codigo_usuario,
-		@nome,
-		@genero,
-		@data_nascimento,
-		@idade,
-		@rg,
-		@cpf,
-		@email,
-		@imagem
-	)
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		insert into pessoa
+		(
+			codigo_endereco,
+			codigo_usuario,
+			nome,
+			genero,
+			data_nascimento,
+			idade,
+			rg,
+			cpf,
+			email,
+			foto
+		)
+		values
+		(
+			@codigo_endereco,
+			@codigo_usuario,
+			@nome,
+			@genero,
+			@data_nascimento,
+			@idade,
+			@rg,
+			@cpf,
+			@email,
+			@imagem
+		)
+	commit
 	return scope_identity()
-end
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
 go
 
 -- procedure para inserir na tabela responsável
@@ -463,27 +498,39 @@ create procedure sp_inserir_responsavel
 		@codigo_vinculo_responsavel int
 	)
 as
-begin
-	insert into responsavel
-	(
-		codigo_endereco,
-		codigo_vinculo,
-		nome,
-		rg,
-		cpf,
-		telefone
-	)
-	values
-	(
-		@codigo_endereco,
-		@codigo_vinculo_responsavel,
-		@nome_responsavel,
-		@rg_responsavel,
-		@cpf_responsavel,
-		@telefone_responsavel
-	)
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		insert into responsavel
+		(
+			codigo_endereco,
+			codigo_vinculo,
+			nome,
+			rg,
+			cpf,
+			telefone
+		)
+		values
+		(
+			@codigo_endereco,
+			@codigo_vinculo_responsavel,
+			@nome_responsavel,
+			@rg_responsavel,
+			@cpf_responsavel,
+			@telefone_responsavel
+		)
+	commit
 	return scope_identity()
-end
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
 go
 
 -- procedure para inserir na tabela de aluno
@@ -499,7 +546,7 @@ create procedure sp_inserir_aluno
 		@cpf varchar(255),
 		@email varchar(255),
 		@codigo_status int,
-		@imagem varbinary,
+		@imagem varchar(255) = null,
 		@rua varchar(255),
 		@numero int,
 		@bairro varchar(255),
@@ -516,9 +563,10 @@ create procedure sp_inserir_aluno
 	)
 as
 	declare @error_code int
+	declare @error varchar(100)
+
 	select @error_code = @@error
 begin try
-	begin tran
 		-- declaração de variáveis
 		declare @existe_cpf int = 0
 		declare @codigo_endereco int
@@ -530,11 +578,11 @@ begin try
 
 		if @existe_cpf > 0
 		begin
-			rollback tran
 			raiserror('O aluno a ser cadastrado já existe', 16, 1)
 		end
 		else
 		begin
+			begin tran
 			-- inserir o endereço informado para obter o código_endereco para a tabela pessoa
 			exec @codigo_endereco = sp_inserir_endereco @rua, @numero, @bairro, @cidade, @estado, @cep
 
@@ -542,7 +590,7 @@ begin try
 			exec @codigo_usuario = sp_inserir_usuario @email
 
 			-- inserir a pessoa para obter o código correspondente
-			exec @codigo_pessoa = sp_inserir_pessoa @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @data_matricula, @idade, @rg, @cpf, @email, @imagem
+			exec @codigo_pessoa = sp_inserir_pessoa  @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @idade, @rg, @cpf, @email, @imagem
 
 			-- inserir o responsavel para obter o código do responsável
 			exec @codigo_responsavel = sp_inserir_responsavel @codigo_endereco, @nome_responsavel, @rg_responsavel, @cpf_responsavel, @telefone_responsavel, @codigo_vinculo_responsavel
@@ -562,7 +610,7 @@ begin try
 				@codigo_pessoa,
 				@codigo_escolaridade,
 				@codigo_responsavel,
-				0,
+				@codigo_status,
 				@data_matricula,
 				@telefone
 			)
@@ -575,33 +623,35 @@ end try
 begin catch
 	if @@trancount > 0 rollback
 	select @error_code = error_number()
-	return @error_code
+	set @error = ERROR_MESSAGE()
+	return @error
 end catch
 go
 
 -- inserir na tabela professor
-create procedure sp_inserir_professor
+alter procedure sp_inserir_professor
 	(
 		@codigo int,
 		@nome varchar(255),
 		@genero varchar(255),
 		@data_nascimento datetime,
-		@data_matricula datetime,
 		@idade int,
 		@rg varchar(255),
 		@cpf varchar(255),
 		@email varchar(255),
-		@imagem varbinary,
 		@rua varchar(255),
 		@numero int,
 		@bairro varchar(255),
 		@cidade varchar(255),
 		@estado varchar(255),
 		@cep int,
-		@telefone varchar(255)
+		@telefone varchar(255),
+		@codigo_status int
 	)
 as
 	declare @error_code int
+	declare @error varchar(100)
+
 	select @error_code = @@error
 begin try
 	begin tran
@@ -615,7 +665,6 @@ begin try
 
 		if @existe_cpf > 0
 		begin
-			rollback tran
 			raiserror('Professor a ser cadastrado já existe', 16, 1)
 		end
 		else
@@ -627,7 +676,7 @@ begin try
 			exec @codigo_usuario = sp_inserir_usuario @email
 
 			-- inserir na tabela pessoa
-			exec @codigo_pessoa = sp_inserir_pessoa @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @data_matricula, @idade, @rg, @cpf, @email, @imagem
+			exec @codigo_pessoa = sp_inserir_pessoa @
 
 			-- inserir na tabela professor
 			insert into professor
@@ -639,7 +688,7 @@ begin try
 			values
 			(
 				@codigo_pessoa,
-				0,
+				@codigo_status,
 				@telefone
 			)
 		commit tran
@@ -649,9 +698,7 @@ begin try
 	return @error_code -- 0 se bem sucedido, diferente de 0 se falhar
 end try
 begin catch
-	if @@trancount > 0 rollback
-	select @error_code = error_number()
-	return @error_code
+	throw
 end catch
 go
 
@@ -669,6 +716,33 @@ as
 begin try
 	begin tran
 		-- declaração de variáveis
+		declare @codigo_data int
+
+		-- inserir data na tebela data_disciplina
+		insert into data_disciplina
+		(
+			data
+		)
+		values
+		(
+			@data
+		)
+		set @codigo_data = scope_identity()
+
+		insert into disciplina
+		(
+			codigo_data,
+			descricao,
+			total_vagas,
+			vagas_disponiveis
+		)
+		values
+		(
+			@codigo_data,
+			@descricao,
+			@total_vagas,
+			@total_vagas
+		)
 	commit tran
 
 	select @error_code = 0
@@ -680,6 +754,443 @@ begin catch
 	return @error_code
 end catch
 go
+
+
+create procedure sp_update_endereco
+	(
+		@codigo_endereco int,
+		@rua varchar(255),
+		@numero int,
+		@bairro varchar(255),
+		@cidade varchar(255),
+		@estado varchar(255),
+		@cep int
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		update endereco
+		set rua = @rua,
+			numero = @numero,
+			bairro = @bairro,
+			cidade = @cidade,
+			estado = @estado,
+			cep = @cep
+		where codigo = @codigo_endereco
+	commit
+	return scope_identity()
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+-- procesure para inserir o usuário
+create procedure sp_update_usuario
+	(
+		@codigo_usuario int,
+		@email varchar(255)
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		update usuario
+		set usuario = @email
+		where codigo = @codigo_usuario
+	commit
+	return scope_identity()
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+-- inserir na tabela pessoa
+alter procedure sp_update_pessoa
+	(
+		@codigo_pessoa int,
+		@nome varchar(255),
+		@genero varchar(255),
+		@data_nascimento datetime,
+		@idade int,
+		@email varchar(255)
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		-- declaração de variáveis
+		declare @codigo_usuario_old int = (select codigo_usuario from pessoa where codigo = @codigo_pessoa)
+
+		-- atualizar informações da tabela pessoa
+		update pessoa
+		set nome = @nome,
+			genero = @genero,
+			idade = @idade,
+			email = @email
+		where codigo = @codigo_pessoa
+
+		-- atualizar informações da tabela usuário
+		exec sp_update_usuario @codigo_usuario_old, @email
+	commit
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+-- procedure para inserir na tabela responsável
+create procedure sp_update_responsavel
+	(
+		@codigo_responsavel int,
+		@nome_responsavel varchar(255),
+		@telefone_responsavel varchar(255),
+		@codigo_vinculo_responsavel int
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		update responsavel
+		set nome = @nome_responsavel,
+			telefone = @telefone_responsavel,
+			codigo_vinculo = @codigo_vinculo_responsavel
+		where codigo = @codigo_responsavel
+	commit
+	return scope_identity()
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+-- atualizar a tabela aluno
+alter procedure sp_update_aluno
+	(
+		@codigo int,
+		@nome varchar(255),
+		@genero varchar(255),
+		@data_nascimento datetime,
+		@data_matricula datetime,
+		@idade int,
+		@rg varchar(255),
+		@cpf varchar(255),
+		@email varchar(255),
+		@codigo_status int,
+		@rua varchar(255),
+		@numero int,
+		@bairro varchar(255),
+		@cidade varchar(255),
+		@estado varchar(255),
+		@cep int,
+		@telefone varchar(255),
+		@codigo_escolaridade int,
+		@nome_responsavel varchar(255),
+		@rg_responsavel varchar(255),
+		@cpf_responsavel varchar(255),
+		@telefone_responsavel varchar(255),
+		@codigo_vinculo_responsavel int
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		declare @existe_codigo int = (select count(1) from aluno where codigo = @codigo)
+		declare @codigo_pessoa_old int = (select codigo_pessoa from aluno where codigo = @codigo)
+		declare @codigo_escolaridade_old int = (select codigo_escolaridade from aluno where codigo = @codigo)
+		declare @codigo_responsavel_old int = (select codigo_responsavel from aluno where codigo = @codigo)
+		declare @codigo_endereco_old int = (select codigo_endereco from pessoa where codigo = @codigo_pessoa_old)
+
+		-- atualizar o aluno
+		update aluno
+		set codigo_escolaridade = @codigo_escolaridade,
+			codigo_status = @codigo_status,
+			telefone = @telefone
+		where codigo = @codigo
+
+		-- atualizar os registros na tabela pessoa
+		exec sp_update_pessoa @codigo_pessoa_old, @nome, @genero, @data_nascimento, @idade, @email
+
+		-- atualizar os registros na tabela endereco
+		exec sp_update_endereco @codigo_endereco_old, @rua, @numero, @bairro, @cidade, @estado, @cep
+
+		-- atualizar os registros na tabela responsável
+		exec sp_update_responsavel @codigo_responsavel_old, @nome_responsavel, @telefone_responsavel, @codigo_vinculo_responsavel
+		commit
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+alter procedure sp_update_professor
+	(
+		@codigo int,
+		@nome varchar(255),
+		@genero varchar(255),
+		@data_nascimento datetime,
+		@idade int,
+		@rg varchar(255),
+		@cpf varchar(255),
+		@email varchar(255),
+		@codigo_status int,
+		@rua varchar(255),
+		@numero int,
+		@bairro varchar(255),
+		@cidade varchar(255),
+		@estado varchar(255),
+		@cep int,
+		@telefone varchar(255)
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		declare @codigo_pessoa_old int = (select codigo_pessoa from professor where codigo = @codigo)
+		declare @codigo_endereco_old int = (select codigo_endereco from pessoa where codigo = @codigo_pessoa_old)
+
+		-- atualizar o aluno
+		update professor
+		set codigo_status = @codigo_status,
+			telefone = @telefone
+		where codigo = @codigo
+
+		-- atualizar os registros na tabela pessoa
+		exec sp_update_pessoa @codigo_pessoa_old, @nome, @genero, @data_nascimento, @idade, @email
+
+		-- atualizar os registros na tabela endereco
+		exec sp_update_endereco @codigo_endereco_old, @rua, @numero, @bairro, @cidade, @estado, @cep
+		commit
+end try
+begin catch
+	if @@trancount > 0 rollback
+	select @error_code = error_number()
+	set @error = ERROR_MESSAGE()
+	return @error
+end catch
+go
+
+-- listagem de dados da tabela aluno
+alter procedure sp_listagem_aluno
+as
+begin
+	select aluno.codigo,
+		pessoa.nome,
+		aluno.data_matricula,
+		disciplina_aluno.descricao as descricao_disciplina,
+		pessoa.genero,
+		pessoa.data_nascimento,
+		aluno.data_matricula,
+		pessoa.idade,
+		pessoa.rg,
+		pessoa.cpf,
+		pessoa.email,
+		aluno.codigo_status,
+		aluno_status.descricao as descricao_status,
+		endereco.rua,
+		endereco.numero,
+		endereco.bairro,
+		endereco.cidade,
+		endereco.estado,
+		endereco.cep,
+		aluno.telefone,
+		aluno.codigo_escolaridade,
+		escolaridade.descricao as descricao_escolaridade,
+		responsavel.nome as nome_responsavel,
+		responsavel.rg as rg_responsavel,
+		responsavel.cpf as cpf_responsavel,
+		responsavel.telefone as telefone_responsavel,
+		aluno.codigo_responsavel as codigo_vinculo_responsavel
+	from aluno
+	inner join pessoa
+		on pessoa.codigo = aluno.codigo_pessoa
+	inner join aluno_status
+		on aluno_status.codigo = aluno.codigo_status
+	inner join escolaridade
+		on escolaridade.codigo = aluno.codigo_escolaridade
+	inner join endereco
+		on endereco.codigo = pessoa.codigo_endereco
+	inner join responsavel
+		on responsavel.codigo = aluno.codigo_responsavel
+	left join (select disciplina_aluno.codigo_aluno, disciplina.descricao 
+		from disciplina_aluno
+		inner join disciplina
+			on disciplina.codigo = disciplina_aluno.codigo_disciplina
+		) disciplina_aluno
+		on disciplina_aluno.codigo_aluno = aluno.codigo
+end
+go
+
+-- listagem de dados da tabela professor
+alter procedure sp_listagem_professor
+as
+begin
+	select professor.codigo,
+		pessoa.nome,
+		disciplina_professor.descricao as descricao_disciplina,
+		pessoa.genero,
+		pessoa.data_nascimento,
+		pessoa.idade,
+		pessoa.rg,
+		pessoa.cpf,
+		pessoa.email,
+		professor.codigo_status,
+		professor_status.descricao as descricao_status,
+		endereco.rua,
+		endereco.numero,
+		endereco.bairro,
+		endereco.cidade,
+		endereco.estado,
+		endereco.cep,
+		professor.telefone
+	from professor
+	inner join pessoa
+		on pessoa.codigo = professor.codigo_pessoa
+	inner join professor_status
+		on professor_status.codigo = professor.codigo
+	inner join endereco
+		on endereco.codigo = pessoa.codigo_endereco
+	left join (select disciplina_professor.codigo_professor, disciplina.descricao
+		from disciplina_professor
+		inner join disciplina
+			on disciplina.codigo = disciplina_professor.codigo_disciplina
+		) disciplina_professor
+		on disciplina_professor.codigo_professor = professor.codigo
+end
+go
+
+-- consulta para a tabela aluno
+create procedure sp_consulta_aluno
+	(
+		@codigo int
+	)
+as
+begin
+	select aluno.codigo,
+		pessoa.nome,
+		aluno.data_matricula,
+		disciplina_aluno.descricao as descricao_disciplina,
+		pessoa.genero,
+		pessoa.data_nascimento,
+		aluno.data_matricula,
+		pessoa.idade,
+		pessoa.rg,
+		pessoa.cpf,
+		pessoa.email,
+		aluno.codigo_status,
+		aluno_status.descricao as descricao_status,
+		endereco.rua,
+		endereco.numero,
+		endereco.bairro,
+		endereco.cidade,
+		endereco.estado,
+		endereco.cep,
+		aluno.telefone,
+		aluno.codigo_escolaridade,
+		escolaridade.descricao as descricao_escolaridade,
+		responsavel.nome as nome_responsavel,
+		responsavel.rg as rg_responsavel,
+		responsavel.cpf as cpf_responsavel,
+		responsavel.telefone as telefone_responsavel,
+		aluno.codigo_responsavel as codigo_vinculo_responsavel
+	from aluno
+	inner join pessoa
+		on pessoa.codigo = aluno.codigo_pessoa
+	inner join aluno_status
+		on aluno_status.codigo = aluno.codigo_status
+	inner join escolaridade
+		on escolaridade.codigo = aluno.codigo_escolaridade
+	inner join endereco
+		on endereco.codigo = pessoa.codigo_endereco
+	inner join responsavel
+		on responsavel.codigo = aluno.codigo_responsavel
+	left join (select disciplina_aluno.codigo_aluno, disciplina.descricao 
+		from disciplina_aluno
+		inner join disciplina
+			on disciplina.codigo = disciplina_aluno.codigo_disciplina
+		) disciplina_aluno
+		on disciplina_aluno.codigo_aluno = aluno.codigo
+	where aluno.codigo = @codigo
+end
+go
+
+-- consulta para a tabela professor
+create procedure sp_consulta_professor
+	(
+		@codigo int
+	)
+as
+begin
+	select professor.codigo,
+		pessoa.nome,
+		disciplina_professor.descricao as descricao_disciplina,
+		pessoa.genero,
+		pessoa.data_nascimento,
+		pessoa.idade,
+		pessoa.rg,
+		pessoa.cpf,
+		pessoa.email,
+		professor.codigo_status,
+		professor_status.descricao as descricao_status,
+		endereco.rua,
+		endereco.numero,
+		endereco.bairro,
+		endereco.cidade,
+		endereco.estado,
+		endereco.cep,
+		professor.telefone
+	from professor
+	inner join pessoa
+		on pessoa.codigo = professor.codigo_pessoa
+	inner join professor_status
+		on professor_status.codigo = professor.codigo
+	inner join endereco
+		on endereco.codigo = pessoa.codigo_endereco
+	left join (select disciplina_professor.codigo_professor, disciplina.descricao
+		from disciplina_professor
+		inner join disciplina
+			on disciplina.codigo = disciplina_professor.codigo_disciplina
+		) disciplina_professor
+		on disciplina_professor.codigo_professor = professor.codigo
+	where professor.codigo = @codigo
+end
+go
+
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -687,3 +1198,4 @@ go
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+select * from pessoa
