@@ -24,7 +24,8 @@ namespace YouPlay.Controllers
                 ViewBag.Operacao = "I";
 
                 // Preencher o dropbox escolaridade
-                PreencheViewBagEscolaridade();
+                //PreencheViewBagEscolaridade();
+                PreencheViewBag();
 
                 AlunoViewModel aluno = new AlunoViewModel();
                 return View(aluno);
@@ -34,22 +35,5 @@ namespace YouPlay.Controllers
                 throw ex;
             }
         }
-
-        #region métodos
-        /// <summary>
-        /// Obtem a escolaridade cadastrada
-        /// </summary>
-        private void PreencheViewBagEscolaridade()
-        {
-            AlunoDAO dao = new AlunoDAO();
-
-            List<PadraoViewBagSelect> listaEscolaridade = dao.ObtemEscolaridade();
-            List<PadraoViewBagSelect> listaVinculoAluno = dao.ObtemVinculoAluno();
-
-            ViewBag.Escolaridade = listaEscolaridade;
-            ViewBag.VinculoAluno = listaVinculoAluno;
-
-        }
-        #endregion
     }
 }

@@ -341,6 +341,15 @@ begin
 end
 go
 
+-- procedure para obter o status do aluno ou do professor
+create procedure sp_obtem_status (@tabela as varchar(255))
+as
+begin
+	declare @sql varchar(255) = 'select codigo, descricao from ' + @tabela
+	exec (@sql)
+end
+go
+
 -- procedure para inserir o endereco
 create procedure sp_inserir_endereco
 	(
@@ -480,6 +489,7 @@ go
 -- procedure para inserir na tabela de aluno
 create procedure sp_inserir_aluno
 	(
+		@codigo int,
 		@nome varchar(255),
 		@genero varchar(255),
 		@data_nascimento datetime,
@@ -488,6 +498,7 @@ create procedure sp_inserir_aluno
 		@rg varchar(255),
 		@cpf varchar(255),
 		@email varchar(255),
+		@codigo_status int,
 		@imagem varbinary,
 		@rua varchar(255),
 		@numero int,
@@ -571,6 +582,7 @@ go
 -- inserir na tabela professor
 create procedure sp_inserir_professor
 	(
+		@codigo int,
 		@nome varchar(255),
 		@genero varchar(255),
 		@data_nascimento datetime,

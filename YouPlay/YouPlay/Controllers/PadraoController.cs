@@ -24,7 +24,7 @@ namespace YouPlay.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(T model, string Operacao)
+        public virtual ActionResult Salvar(T model, string Operacao)
         {
             try
             {
@@ -32,7 +32,8 @@ namespace YouPlay.Controllers
                 if (ModelState.IsValid == false)
                 {
                     ViewBag.Operacao = Operacao;
-                    PreencheDadosParaView(Operacao, model);
+                    //PreencheDadosParaView(Operacao, model);
+                    PreencheViewBag();
                     return View("Index", model);
                 }
                 else
@@ -56,11 +57,19 @@ namespace YouPlay.Controllers
         protected virtual void ValidaDados(T model, string operacao)
         {
             if (operacao == "I" && DAO.Consulta(model.Codigo) != null)
+            {
                 ModelState.AddModelError("Id", "Código já está em uso!");
+            }
+
             if (operacao == "A" && DAO.Consulta(model.Codigo) == null)
+            {
                 ModelState.AddModelError("Id", "Este registro não existe!");
+            }
+
             if (model.Codigo <= 0)
+            {
                 ModelState.AddModelError("Id", "Id inválido!");
+            }
         }
 
         public ActionResult Edit(int id)
@@ -94,6 +103,20 @@ namespace YouPlay.Controllers
             {
                 return RedirectToAction("Consulta");
             }
+        }
+
+        public void PreencheViewBag()
+        {
+            AlunoDAO dao = new AlunoDAO();
+
+            List<PadraoViewBagSelect> listaEscolaridade = dao.ObtemEscolaridade();
+            List<PadraoViewBagSelect> listaVinculoAluno = dao.ObtemVinculoAluno();
+            List<PadraoViewBagSelect> listaStatus = dao.ListagemStatus();
+
+            ViewBag.Escolaridade = listaEscolaridade;
+            ViewBag.VinculoAluno = listaVinculoAluno;
+            ViewBag.Status = listaStatus;
+
         }
     }
 }

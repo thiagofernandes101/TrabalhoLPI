@@ -8,16 +8,15 @@ using YouPlay.Models;
 
 namespace YouPlay.DAO
 {
-    public class AlunoDAO : PadraoDAO<AlunoViewModel>
+    public class ProfessorDAO : PadraoDAO<ProfessorViewModel>
     {
-        protected override SqlParameter[] CriaParametros(AlunoViewModel model)
+        protected override SqlParameter[] CriaParametros(ProfessorViewModel model)
         {
-            SqlParameter[] parametros = new SqlParameter[24];
+            SqlParameter[] parametros = new SqlParameter[18];
             parametros[0] = new SqlParameter("codigo", model.Codigo);
             parametros[1] = new SqlParameter("nome", model.Nome);
             parametros[2] = new SqlParameter("genero", model.Genero);
             parametros[3] = new SqlParameter("data_nascimento", model.DataNascimento);
-            parametros[4] = new SqlParameter("data_matricula", model.DataMatricula);
             parametros[5] = new SqlParameter("idade", model.Idade);
             parametros[6] = new SqlParameter("rg", model.Rg);
             parametros[7] = new SqlParameter("cpf", model.Cpf);
@@ -31,25 +30,18 @@ namespace YouPlay.DAO
             parametros[15] = new SqlParameter("estado", model.Estado);
             parametros[16] = new SqlParameter("cep", model.Cep);
             parametros[17] = new SqlParameter("telefone", model.Telefone);
-            parametros[18] = new SqlParameter("codigo_escolaridade", model.CodigoEscolaridade);
-            parametros[19] = new SqlParameter("nome_responsavel", model.NomeResponsavel);
-            parametros[20] = new SqlParameter("rg_responsavel", model.RgResponsavel);
-            parametros[21] = new SqlParameter("cpf_responsavel", model.CpfResponsavel);
-            parametros[22] = new SqlParameter("telefone_responsavel", model.TelefoneResponsavel);
-            parametros[23] = new SqlParameter("codigo_vinculo_responsavel", model.CodigoVinculoResponsavel);
 
             return parametros;
         }
 
-        protected override AlunoViewModel MontaModel(DataRow registro)
+        protected override ProfessorViewModel MontaModel(DataRow registro)
         {
-            AlunoViewModel aluno = new AlunoViewModel
+            ProfessorViewModel professor = new ProfessorViewModel
             {
                 Codigo = registro["codigo"] != DBNull.Value ? Convert.ToInt32(registro["codigo"]) : 0,
                 Nome = registro["nome"] != DBNull.Value ? registro["nome"].ToString() : string.Empty,
                 Genero = registro["genero"] != DBNull.Value ? registro["genero"].ToString() : string.Empty,
                 DataNascimento = registro["data_nascimento"] != DBNull.Value ? Convert.ToDateTime(registro["data_nascimento"]) : DateTime.Now,
-                DataMatricula = registro["data_matricula"] != DBNull.Value ? Convert.ToDateTime(registro["data_matricula"]) : DateTime.Now,
                 Idade = registro["idade"] != DBNull.Value ? Convert.ToInt32(registro["idade"]) : 0,
                 Rg = registro["rg"] != DBNull.Value ? registro["rg"].ToString() : string.Empty,
                 Cpf = registro["cpf"] != DBNull.Value ? registro["cpf"].ToString() : string.Empty,
@@ -65,73 +57,14 @@ namespace YouPlay.DAO
                 Estado = registro["estado"] != DBNull.Value ? registro["estado"].ToString() : string.Empty,
                 Cep = registro["cep"] != DBNull.Value ? Convert.ToInt32(registro["cep"]) : 0,
                 Telefone = registro["telefone"] != DBNull.Value ? registro["telefone"].ToString() : string.Empty,
-                CodigoEscolaridade = registro["codigo_escolaridade"] != DBNull.Value ? Convert.ToInt32(registro["codigo_escolaridade"]) : 0,
-                DescricaoEscolaridade = registro["descricao_escolaridade"] != DBNull.Value ? registro["descricao_escolaridade"].ToString() : string.Empty,
-
-                NomeResponsavel = registro["nome_responsavel"] != DBNull.Value ? registro["nome_responsavel"].ToString() : string.Empty,
-                RgResponsavel = registro["rg_responsavel"] != DBNull.Value ? registro["rg_responsavel"].ToString() : string.Empty,
-                CpfResponsavel = registro["cpf_responsavel"] != DBNull.Value ? registro["cpf_responsavel"].ToString() : string.Empty,
-                TelefoneResponsavel = registro["telefone_responsavel"] != DBNull.Value ? registro["telefone_responsavel"].ToString() : string.Empty,
-                CodigoVinculoResponsavel = registro["codigo_vinculo_responsavel"] != DBNull.Value ? Convert.ToInt32(registro["codigo_vinculo_responsavel"]) : 0
             };
 
-            return aluno;
+            return professor;
         }
 
         protected override void SetTabela()
         {
-            Tabela = "Alunos";
-        }
-
-        public List<PadraoViewBagSelect> ObtemEscolaridade()
-        {
-            try
-            {
-                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_escolaridade", null);
-                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
-
-                foreach (DataRow registro in tabela.Rows)
-                {
-                    PadraoViewBagSelect escolaridade = new PadraoViewBagSelect
-                    {
-                        Codigo = Convert.ToInt32(registro["Codigo"]),
-                        Descricao = registro["Descricao"].ToString()
-                    };
-                    lista.Add(escolaridade);
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public List<PadraoViewBagSelect> ObtemVinculoAluno()
-        {
-            try
-            {
-                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_vinculo_aluno", null);
-                List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
-
-                foreach (DataRow registro in tabela.Rows)
-                {
-                    PadraoViewBagSelect vinculo = new PadraoViewBagSelect
-                    {
-                        Codigo = Convert.ToInt32(registro["codigo"]),
-                        Descricao = registro["descricao"].ToString()
-                    };
-
-                    lista.Add(vinculo);
-                }
-
-                return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            Tabela = "Professor";
         }
 
         public virtual List<PadraoViewBagSelect> ListagemStatus()
@@ -140,7 +73,7 @@ namespace YouPlay.DAO
             {
                 var p = new SqlParameter[]
                 {
-                    new SqlParameter("tabela", "aluno_status")
+                    new SqlParameter("tabela", "professor_status")
                 };
 
                 var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);

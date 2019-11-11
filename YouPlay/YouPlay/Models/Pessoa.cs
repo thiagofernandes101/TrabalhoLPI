@@ -19,7 +19,7 @@ namespace YouPlay.Models
         public string Cpf { get; set; }
         [Required(ErrorMessage = "Insira o email")]
         public string Email { get; set; }
-        public byte[] Imagem { get; set; }
+        public string Imagem { get; set; }
         public string Rua { get; set; }
         public int Numero { get; set; }
         public string Bairro { get; set; }

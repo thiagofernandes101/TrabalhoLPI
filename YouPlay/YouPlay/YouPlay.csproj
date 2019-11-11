@@ -1830,7 +1830,6 @@
     <Content Include="Scripts\plugins\bootstrap-switch.js" />
     <Content Include="Scripts\plugins\nouislider.min.js" />
     <Content Include="Scripts\scripts.js" />
-    <Content Include="SqlDiagramScript\YouPlaySQL.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
@@ -1848,6 +1847,7 @@
     <Compile Include="DAO\HelperDAO.cs" />
     <Compile Include="DAO\LoginDAO.cs" />
     <Compile Include="DAO\PadraoDAO.cs" />
+    <Compile Include="DAO\ProfessorDAO.cs" />
     <Compile Include="Filtros\AutorizacaoFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
