@@ -12,6 +12,10 @@ namespace YouPlay.DAO
     {
         protected override SqlParameter[] CriaParametros(AlunoViewModel model)
         {
+            object imgByte = model.ImagemEmByte;
+            if (imgByte == null)
+                imgByte = DBNull.Value;
+
             SqlParameter[] parametros = new SqlParameter[24];
             parametros[0] = new SqlParameter("codigo", model.Codigo);
             parametros[1] = new SqlParameter("nome", model.Nome);
@@ -23,7 +27,7 @@ namespace YouPlay.DAO
             parametros[7] = new SqlParameter("cpf", model.Cpf);
             parametros[8] = new SqlParameter("email", model.Email);
             parametros[9] = new SqlParameter("codigo_status", model.CodigoStatus);
-            parametros[10] = new SqlParameter("imagem", model.Imagem);
+            parametros[10] = new SqlParameter("imagem", model.imgByte);
             parametros[11] = new SqlParameter("rua", model.Rua);
             parametros[12] = new SqlParameter("numero", model.Numero);
             parametros[13] = new SqlParameter("bairro", model.Bairro);
@@ -56,7 +60,7 @@ namespace YouPlay.DAO
                 Email = registro["email"] != DBNull.Value ? registro["email"].ToString() : string.Empty,
                 CodigoStatus = registro["codigo_status"] != DBNull.Value ? Convert.ToInt32(registro["codigo_status"]) : 0,
                 DescricaoStatus = registro["descricao_status"] != DBNull.Value ? registro["descricao_status"].ToString() : string.Empty,
-                Imagem = registro["imagem"] != DBNull.Value ? registro["imagem"].ToString() : string.Empty,
+                ImagemEmByte = registro["imagem"] != DBNull.Value ? registro["imagem"] as byte[] : null,
 
                 Rua = registro["rua"] != DBNull.Value ? registro["rua"].ToString() : string.Empty,
                 Numero = registro["numero"] != DBNull.Value ? Convert.ToInt32(registro["numero"]) : 0,

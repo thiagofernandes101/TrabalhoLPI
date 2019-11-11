@@ -8,5 +8,7 @@ namespace YouPlay.Models
     public abstract class PadraoViewModel
     {
         public int Codigo { get; set; }
+
+        
     }
 }
