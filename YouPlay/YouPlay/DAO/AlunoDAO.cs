@@ -12,6 +12,10 @@ namespace YouPlay.DAO
     {
         protected override SqlParameter[] CriaParametros(AlunoViewModel model)
         {
+            object imgByte = model.ImagemEmByte;
+            if (imgByte == null)
+                imgByte = DBNull.Value;
+
             SqlParameter[] parametros = new SqlParameter[5];
             parametros[0] = new SqlParameter("codigo", model.Codigo);
             parametros[1] = new SqlParameter("nome", model.Nome);
@@ -23,6 +27,7 @@ namespace YouPlay.DAO
             parametros[6] = new SqlParameter("codigoEscolaridade", model.CodigoEscolaridade);
             parametros[7] = new SqlParameter("dataMatricula", model.DataMatricula);
             parametros[8] = new SqlParameter("rua", model.Rua);
+            parametros[9] = new SqlParameter("foto", imgByte);
 
             return parametros;
         }
@@ -42,7 +47,8 @@ namespace YouPlay.DAO
                 DataMatricula = Convert.ToDateTime(registro["dataMatricula"]),
                 CodigoStatus = Convert.ToInt32(registro["codigoStatus"])
             };
-
+            if (registro["imagem"] != DBNull.Value)
+                aluno.ImagemEmByte = registro["imagem"] as byte[];
             return aluno;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -19,7 +20,6 @@ namespace YouPlay.Models
         public string Cpf { get; set; }
         [Required(ErrorMessage = "Insira o email")]
         public string Email { get; set; }
-        public byte[] Imagem { get; set; }
         public string Rua { get; set; }
         public int Numero { get; set; }
         public string Bairro { get; set; }
@@ -28,5 +28,28 @@ namespace YouPlay.Models
         [Required(ErrorMessage = "Insira o CEP")]
         public int Cep { get; set; }
 
+        /// <summary>
+        /// Imagem recebida do form pelo controller
+        /// </summary>
+        public IFormFile Imagem { get; set; }
+
+        /// <summary>
+        /// Imagem em bytes pronta para ser salva
+        /// </summary>
+        public byte[] ImagemEmByte { get; set; }
+
+        /// <summary>
+        /// Imagem usada para ser enviada ao form no formato para ser exibida
+        /// </summary>
+        public string ImagemEmBase64
+        {
+            get
+            {
+                if (ImagemEmByte != null)
+                    return Convert.ToBase64String(ImagemEmByte);
+                else
+                    return string.Empty;
+            }
+        }
     }
 }

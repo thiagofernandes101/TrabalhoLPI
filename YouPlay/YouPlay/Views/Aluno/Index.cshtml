@@ -10,23 +10,10 @@
                     <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
                     <!-- Cadastro aluno -->
                     <div class="col-sm-2">
-
-                        @*<div class="col-sm-2">
-                            <div class="form-group row">
-                                <div class="col-md-2">
-                                    <img class="rounded-circle img-raised" alt="Thumbnail Image" src="../../img/julie.jpg" name="imgfunc">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-5 control-label"> </label>
-                                <input type="file" name="arquivo" id="arquivoImagem" class="btn btn-primary" onchange="previewImagem()">
-                            </div>
-                        </div>*@
-
-
                         <div id="insertImage" class="form-group row">
                             @*<img id="imgPreview" class="rounded-circle img-raised" alt="Thumbnail Image" src="../../img/julie.jpg" name="ïmgPreview" />*@
-                            <img id='fotoPessoa' src='../../img/julie.jpg' width='100' height='100' alt='Thumbnail Image' />
+                            <img id='fotoPessoa' src="data:image/jpeg;base64,@Model.ImagemEmBase64" width='100' height='100' alt='Thumbnail Image' />
+                            <span asp-validation-for="Imagem" class="text-danger"></span>
                         </div>
                         <div id="AlteraImgHide" class="form-group row">
                             <input type="file" id="btnAlteraImg" @*id="Imagem"*@ name="Imagem" onchange="alterarFoto(event); return false;" @*onchange="verImagem()"*@ class="btn btn-primary" value="Cadastrar imagem" >
