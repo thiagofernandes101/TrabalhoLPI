@@ -2152,12 +2152,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AlunoController.cs" />
-    <Compile Include="Controllers\AulaController.cs" />
+    <Compile Include="Controllers\DisciplinaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PadraoController.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
     <Compile Include="DAO\AlunoDAO.cs" />
+    <Compile Include="DAO\AulaDAO.cs" />
     <Compile Include="DAO\Conexao.cs" />
     <Compile Include="DAO\HelperDAO.cs" />
     <Compile Include="DAO\LoginDAO.cs" />
@@ -2293,8 +2294,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Aluno\Consulta.cshtml" />
     <Content Include="Views\Professor\Consulta.cshtml" />
-    <Content Include="Views\Aula\Consulta.cshtml" />
-    <Content Include="Views\Aula\Index.cshtml" />
+    <Content Include="Views\Disciplina\Consulta.cshtml" />
+    <Content Include="Views\Disciplina\Index.cshtml" />
     <Content Include="Views\Professor\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

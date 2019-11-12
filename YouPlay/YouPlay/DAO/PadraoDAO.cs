@@ -91,22 +91,27 @@ namespace YouPlay.DAO
         {
             try
             {
-                var p = new SqlParameter[]
-                {
-                    new SqlParameter("tabela", Tabela + "_status")
-                };
-
-                var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);
                 List<PadraoViewBagSelect> lista = new List<PadraoViewBagSelect>();
 
-                foreach (DataRow registro in tabela.Rows)
+                if (Tabela == "aluno" || Tabela == "professor")
                 {
-                    PadraoViewBagSelect padraoBag = new PadraoViewBagSelect
+                    var p = new SqlParameter[]
                     {
-                        Codigo = Convert.ToInt32(registro["codigo"]),
-                        Descricao = registro["descricao"].ToString()
+                    new SqlParameter("tabela", Tabela + "_status")
                     };
-                    lista.Add(padraoBag);
+
+                    var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_status", p);
+                    
+
+                    foreach (DataRow registro in tabela.Rows)
+                    {
+                        PadraoViewBagSelect padraoBag = new PadraoViewBagSelect
+                        {
+                            Codigo = Convert.ToInt32(registro["codigo"]),
+                            Descricao = registro["descricao"].ToString()
+                        };
+                        lista.Add(padraoBag);
+                    }    
                 }
 
                 return lista;

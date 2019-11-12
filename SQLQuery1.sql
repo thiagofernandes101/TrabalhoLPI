@@ -733,12 +733,12 @@ end catch
 go
 
 -- procedure para inserir na tabela disciplina
-create procedure sp_inserir_disciplina
+alter procedure sp_inserir_disciplina
 	(
+		@codigo int,
 		@data datetime,
 		@descricao varchar(255),
-		@total_vagas int,
-		@codigo_professor int
+		@total_vagas int
 	)
 as
 	declare @error_code int
@@ -1221,6 +1221,88 @@ begin
 end
 go
 
+create procedure sp_listagem_disciplina
+as
+begin
+	select disciplina.codigo,
+		disciplina.descricao,
+		disciplina.total_vagas,
+		disciplina.vagas_disponiveis,
+		data_disciplina.data
+	from disciplina
+	inner join data_disciplina
+		on data_disciplina.codigo = disciplina.codigo_data
+end
+go
+
+create procedure sp_consulta_disciplina
+	(
+		@codigo int
+	)
+as
+begin
+	select disciplina.codigo,
+		disciplina.descricao,
+		disciplina.total_vagas,
+		disciplina.vagas_disponiveis,
+		data_disciplina.data
+	from disciplina
+	inner join data_disciplina
+		on data_disciplina.codigo = disciplina.codigo_data
+	where disciplina.codigo = @codigo
+end
+go
+
+create procedure sp_delete_disciplina
+	(
+		@codigo int
+	)
+as
+begin try
+	begin tran
+		-- declaração de variáveis
+		declare @codigo_data int = (select disciplina.codigo_data from disciplina where codigo = @codigo)
+
+		-- deletar da tabela disciplina
+		delete from disciplina
+		where codigo = @codigo
+
+		-- deletar da tabela data_disciplina
+		delete from data_disciplina
+		where codigo = @codigo_data
+	commit
+end try
+begin catch
+	rollback
+end catch
+go
+
+create procedure sp_update_disciplina
+	(
+		@codigo int,
+		@data datetime,
+		@descricao varchar(255),
+		@total_vagas int
+	)
+as
+begin try
+	begin tran
+		declare @codigo_data int = (select disciplina.codigo_data from disciplina where codigo = @codigo)
+
+		update disciplina
+		set descricao = @descricao,
+			total_vagas = @total_vagas
+		where codigo = @codigo
+
+		update data_disciplina
+		set data = @data
+		where @codigo = @codigo_data
+	commit
+end try
+begin catch
+	rollback
+end catch
+go
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 

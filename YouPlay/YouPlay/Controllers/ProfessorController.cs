@@ -9,7 +9,7 @@ using YouPlay.Models;
 
 namespace YouPlay.Controllers
 {
-
+    [AutorizacaoFilter]
     public class ProfessorController : PadraoController<ProfessorViewModel>
     {
         public ProfessorController()

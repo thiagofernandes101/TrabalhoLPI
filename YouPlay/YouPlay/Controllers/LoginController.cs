@@ -24,7 +24,7 @@ namespace YouPlay.Controllers
                 LoginDAO dao = new LoginDAO();
                 UsuarioViewModel usuarioLogado = dao.ObtemUsuario(usuario, senha);
                 Session["usuarioLogado"] = usuarioLogado;
-                return RedirectToAction("Consulta", "Aula");
+                return RedirectToAction("Consulta", "Disciplina");
             }
             catch (Exception ex)
             {
