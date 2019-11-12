@@ -20,6 +20,11 @@
                         </div>
                     </div>
 
+                    @if (ViewBag.Operacao == "A")
+                    {
+                        <input type="hidden" name="Codigo" value="@Model.Codigo" />
+                    }
+
                     <div class="form-group row">
                         <!-- Nome professor -->
                         <div class="col-md-6">

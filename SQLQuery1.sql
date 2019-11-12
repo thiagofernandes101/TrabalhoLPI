@@ -271,17 +271,63 @@ go
 /* criação de procedures */
 
 -- procedure padrão para deletar dados
-create procedure sp_delete
+create procedure sp_delete_aluno
 	(
-		@codigo int,
-		@tabela varchar(255)
+		@codigo int
 	)
 as
-begin
-	declare @sql varchar(max)
-	set @sql = 'delete from ' + @tabela + ' where codigo = ' + cast(@codigo as varchar(max))
-	exec(@sql)
-end
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		-- declaração de variáveis
+		declare @codigo_pessoa int = (select codigo_pessoa from aluno where codigo = @codigo)
+		declare @codigo_responsavel int = (select codigo_responsavel from aluno where codigo = @codigo)
+		declare @codigo_usuario int = (select codigo_usuario from pessoa where codigo = @codigo_pessoa)
+		declare @codigo_endereco int = (select codigo_endereco from pessoa where codigo = @codigo_pessoa)
+		
+		delete from aluno where codigo = @codigo
+		delete from pessoa where codigo = @codigo_pessoa
+		delete from responsavel where codigo = @codigo_responsavel
+		delete from endereco where codigo = @codigo_endereco	
+		delete from usuario where codigo = @codigo_usuario	
+	commit
+end try
+begin catch
+	set @error = ERROR_MESSAGE()
+	rollback
+end catch
+go
+
+-- procedure para deletar da tabela professor
+create procedure sp_delete_professor
+	(
+		@codigo int
+	)
+as
+	declare @error_code int
+	declare @error varchar(100)
+
+	select @error_code = @@error
+begin try
+	begin tran
+		-- declaração de variáveis
+		declare @codigo_pessoa int = (select codigo_pessoa from professor where codigo = @codigo)
+		declare @codigo_usuario int = (select codigo_usuario from pessoa where codigo = @codigo_pessoa)
+		declare @codigo_endereco int = (select codigo_endereco from pessoa where codigo = @codigo_pessoa)
+
+		delete from professor where codigo = @codigo
+		delete from pessoa where codigo = @codigo_pessoa
+		delete from endereco where codigo = @codigo_endereco	
+		delete from usuario where codigo = @codigo_usuario
+	commit
+end try
+begin catch
+	set @error = ERROR_MESSAGE()
+	rollback
+end catch
 go
 
 -- procedure padrão para consulta de dados por id
@@ -295,18 +341,6 @@ begin
 	declare @sql varchar(max);
 	set @sql = 'select * from ' + @tabela + ' where codgio = ' + cast(@codigo as varchar(max))
 	exec(@sql)
-end
-go
-
--- procedure para listagem dos dados de alguma tabela
-create procedure sp_listagem
-	(
-		@tabela varchar(max),
-		@ordem varchar(max)
-	)
-as
-begin
-	exec('select * from ' + @tabela + ' order by ' + @ordem)
 end
 go
 
@@ -440,8 +474,7 @@ create procedure sp_inserir_pessoa
 		@idade int,
 		@rg varchar(255),
 		@cpf varchar(255),
-		@email varchar(255),
-		@imagem varchar
+		@email varchar(255)
 	)
 as
 	declare @error_code int
@@ -460,8 +493,7 @@ begin try
 			idade,
 			rg,
 			cpf,
-			email,
-			foto
+			email
 		)
 		values
 		(
@@ -473,8 +505,7 @@ begin try
 			@idade,
 			@rg,
 			@cpf,
-			@email,
-			@imagem
+			@email
 		)
 	commit
 	return scope_identity()
@@ -546,7 +577,6 @@ create procedure sp_inserir_aluno
 		@cpf varchar(255),
 		@email varchar(255),
 		@codigo_status int,
-		@imagem varchar(255) = null,
 		@rua varchar(255),
 		@numero int,
 		@bairro varchar(255),
@@ -590,7 +620,7 @@ begin try
 			exec @codigo_usuario = sp_inserir_usuario @email
 
 			-- inserir a pessoa para obter o código correspondente
-			exec @codigo_pessoa = sp_inserir_pessoa  @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @idade, @rg, @cpf, @email, @imagem
+			exec @codigo_pessoa = sp_inserir_pessoa  @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @idade, @rg, @cpf, @email
 
 			-- inserir o responsavel para obter o código do responsável
 			exec @codigo_responsavel = sp_inserir_responsavel @codigo_endereco, @nome_responsavel, @rg_responsavel, @cpf_responsavel, @telefone_responsavel, @codigo_vinculo_responsavel
@@ -629,7 +659,7 @@ end catch
 go
 
 -- inserir na tabela professor
-alter procedure sp_inserir_professor
+create procedure sp_inserir_professor
 	(
 		@codigo int,
 		@nome varchar(255),
@@ -676,7 +706,7 @@ begin try
 			exec @codigo_usuario = sp_inserir_usuario @email
 
 			-- inserir na tabela pessoa
-			exec @codigo_pessoa = sp_inserir_pessoa @
+			exec @codigo_pessoa = sp_inserir_pessoa @codigo_endereco, @codigo_usuario, @nome, @genero, @data_nascimento, @idade, @rg, @cpf, @email
 
 			-- inserir na tabela professor
 			insert into professor
@@ -820,7 +850,7 @@ end catch
 go
 
 -- inserir na tabela pessoa
-alter procedure sp_update_pessoa
+create procedure sp_update_pessoa
 	(
 		@codigo_pessoa int,
 		@nome varchar(255),
@@ -891,7 +921,7 @@ end catch
 go
 
 -- atualizar a tabela aluno
-alter procedure sp_update_aluno
+create procedure sp_update_aluno
 	(
 		@codigo int,
 		@nome varchar(255),
@@ -955,7 +985,7 @@ begin catch
 end catch
 go
 
-alter procedure sp_update_professor
+create procedure sp_update_professor
 	(
 		@codigo int,
 		@nome varchar(255),
@@ -1006,7 +1036,7 @@ end catch
 go
 
 -- listagem de dados da tabela aluno
-alter procedure sp_listagem_aluno
+create procedure sp_listagem_aluno
 as
 begin
 	select aluno.codigo,
@@ -1057,7 +1087,7 @@ end
 go
 
 -- listagem de dados da tabela professor
-alter procedure sp_listagem_professor
+create procedure sp_listagem_professor
 as
 begin
 	select professor.codigo,
@@ -1198,4 +1228,3 @@ go
 
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-select * from pessoa

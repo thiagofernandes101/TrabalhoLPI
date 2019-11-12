@@ -35,11 +35,10 @@ namespace YouPlay.DAO
         {
             var p = new SqlParameter[]
             {
-                new SqlParameter("codigo", codigo),
-                new SqlParameter("tabela", Tabela)
+                new SqlParameter("codigo", codigo)
             };
 
-            HelperDAO.ExecutaProc("sp_delete", p);
+            HelperDAO.ExecutaProc("sp_delete_" + Tabela, p);
         }
 
         public virtual T Consulta(int codigo)

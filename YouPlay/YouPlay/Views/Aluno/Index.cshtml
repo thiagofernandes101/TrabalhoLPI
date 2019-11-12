@@ -13,13 +13,18 @@
                         <div id="insertImage" class="form-group row">
                             @*<img id="imgPreview" class="rounded-circle img-raised" alt="Thumbnail Image" src="../../img/julie.jpg" name="ïmgPreview" />*@
                             <img id='fotoPessoa' name="imgPreview" src="data:image/jpeg;base64,@Model.ImageBase64" width='100' height='100' alt='Thumbnail Image' />
-                            
+
                         </div>
                         <div id="AlteraImgHide" class="form-group row">
                             <input type="file" id="Imagem" @*id="Imagem"*@ @*name="Imagem"*@ onchange="verImagem()" class="btn btn-primary" value="Cadastrar imagem">
                             <button type="button" class="btn btn-primary" name="Imagem" id="btn_carregar_img" onchange="verImagem()">Carregar Imgem</button>
                         </div>
                     </div>
+
+                    @if (ViewBag.Operacao == "A")
+                    {
+                        <input type="hidden" name="Codigo" value="@Model.Codigo" />
+                    }
 
                     <div class="form-group row">
                         <!-- Nome aluno -->
@@ -75,7 +80,7 @@
                                 <input id="Email" name="Email" value="@Model.Email" class="form-control" placeholder="email@email.com" type="email">
                             </div>
                         </div>
-                        
+
                         <!-- Status do aluno -->
                         <div class="col-md-6">
                             <label class="col-md-12 control-label" for="Status">Status</label>
