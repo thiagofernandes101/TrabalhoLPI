@@ -29,7 +29,7 @@ namespace YouPlay.DAO
                 new SqlParameter("senha", senha)
             };
 
-            var tabela = HelperDAO.ExecutaProcSelect("spObtemLogin", parametro);
+            var tabela = HelperDAO.ExecutaProcSelect("sp_obtem_login", parametro);
 
             if (tabela.Rows.Count.Equals(0))
             {

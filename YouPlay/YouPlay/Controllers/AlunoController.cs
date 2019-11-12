@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace YouPlay.Controllers
 {
+    [AutorizacaoFilter]
     public class AlunoController : PadraoController<AlunoViewModel>
     {
         public AlunoController()
