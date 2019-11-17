@@ -1,0 +1,48 @@
+﻿@model YouPlay2019.Models.DisciplinaViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header>
+    <h2 class="text-center">Cadastro de Disciplina</h2>
+</header>
+
+<section>
+    <form asp-action="Salvar" method="post">
+        <div class="form-group">
+            <div class="row">
+                <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+                @if (ViewBag.Operacao == "A")
+                {
+                    <input asp-for="Codigo" type="hidden" />
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label asp-for="Descricao" class="text-black-50">Nome</label>
+                    <input asp-for="Descricao" type="text" class="form-control round-custom" required />
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label asp-for="Data" class="text-black-50">Data</label>
+                    <input asp-for="Data" type="date" class="form-control round-custom" required />
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label asp-for="TotalVagas" class="text-black-50">Total de Vagas</label>
+                    <input asp-for="TotalVagas" type="number" class="form-control round-custom" required />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Salvar dados" class="btn btn-primary round-custom" />
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+

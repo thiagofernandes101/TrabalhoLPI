@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escola de música YouplaY</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <link rel="icon" href="~/Imagens/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Imagens/apple-icon.png" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-transparente mb-3">
+            <div class="container">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">YouPlay</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="nav nav-pills navbar-nav flex-grow-1 justify-content-end">
+                        <li class="nav-item mr-3">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active btn" asp-area="" asp-controller="Login" asp-action="Index">
+                                <i class="far fa-user"></i>
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <section>
+            <h2>Projeto</h2>
+            <p>
+                O projeto escolhido se trata de um gerenciamento de alunos, professores e aulas de uma escola de música e tem como objetivo colocar em
+                prática os conhecimentos passados em aula.
+            </p>
+            <p>
+                Os CRUD's desenvolvidos são de aluno, professor e aulas em que, na tela de alunos, é possível cadastrar os alunos matriculados e consultá-los
+                a partir dos filtros de código, nome, data de matrícula e aulas em que o aluno está cadastrado.
+            </p>
+            <p>
+                A tela de professor funcionará semelhante a tela de alunos, em que é possível fazer o cadastro e consulta de professores, tendo como filtros
+                na tela de consulta, o código, nome e aulas em que o professor está cadastrado.
+            </p>
+            <p>
+                Na tela de aulas, será possível realizar o cadastro e consulta de aulas com os respectivos professores que as ministrarão, assim como será
+                possível que um aluno se cadastre em uma aula de seu interesse, sendo que o aluno não poderá se cadastrar em uma matéria mais de uma vez, mesmo
+                em horários diferentes, cada horário de aula poderá ter apenas um professor ministrando-a.
+            </p>
+            <p>
+                As telas serão disponibilizadas de acordo com a permissão acesso de login do usuário e, caso o usuário não tenha sido cadastrado, será
+                remetido diretamente para a tela de login.
+            </p>
+            <p>
+                O cadastro de um novo usuário deverá ser cadastrado pelo administrador da aplicação.
+            </p>
+        </section>
+        <section>
+            <h2>Desenvolvedores</h2>
+            <ul>
+                <li><p>Marcelo Max RA: 082170021</p></li>
+                <li><p>Thiago Fernandes RA: 082170029</p></li>
+            </ul>
+        </section>
+    </div>
+    <footer class="footer text-muted bg-dark">
+        <div class="container text-white">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                &copy; 2019 - YouPlay2019 - Code by Marcelo & Thiago
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-facebook-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fab fa-twitter-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-instagram"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-github-square"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

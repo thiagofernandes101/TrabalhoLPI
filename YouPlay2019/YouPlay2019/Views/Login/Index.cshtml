@@ -1,0 +1,107 @@
+﻿@model YouPlay2019.Models.UsuarioViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escola de música YouplaY</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <link rel="icon" href="~/Imagens/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Imagens/apple-icon.png" />
+</head>
+<body class="login-background">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-transparente mb-3">
+            <div class="container">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">YouPlay</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="nav nav-pills navbar-nav flex-grow-1 justify-content-end">
+                        <li class="nav-item mr-3">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="About">Sobre</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active btn" asp-area="" asp-controller="Login" asp-action="Index">
+                                <i class="far fa-user"></i>
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <table style="height: 500px" class="col-sm-5">
+                <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            <h1 class="text-white mb-3">Login</h1>
+                            <form asp-action="Login" method="post">
+                                <div class="form-group">
+                                    <label asp-for="Usuario" class="text-white">Email</label>
+                                    <input asp-for="Usuario" type="email" class="form-control round-custom" placeholder="exemplo@exemplo.com" required />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Senha" class="text-white">Senha</label>
+                                    <input asp-for="Senha" type="password" class="form-control round-custom" placeholder="Digite sua senha" required />
+                                </div>
+                                <button type="submit" class="btn btn-outline-primary round-custom">Entrar</button>
+                                <span class="text-danger">@ViewBag.Erro</span>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    <footer class="footer text-muted bg-transparent">
+        <div class="container text-white">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                &copy; 2019 - YouPlay2019 - Code by Marcelo & Thiago
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-facebook-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fab fa-twitter-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-instagram"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-github-square"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

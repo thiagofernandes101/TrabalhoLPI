@@ -65,7 +65,8 @@ namespace YouPlay.DAO
                 Estado = registro["estado"] != DBNull.Value ? registro["estado"].ToString() : string.Empty,
                 Cep = registro["cep"] != DBNull.Value ? Convert.ToInt32(registro["cep"]) : 0,
                 Telefone = registro["telefone"] != DBNull.Value ? registro["telefone"].ToString() : string.Empty,
-                DescricaoDisciplina = registro["descricao_disciplina"] != DBNull.Value ? registro["descricao_disciplina"].ToString() : string.Empty
+                DescricaoDisciplina = registro["descricao_disciplina"] != DBNull.Value ? registro["descricao_disciplina"].ToString() : string.Empty,
+                
             };
 
             return professor;

@@ -1,0 +1,179 @@
+﻿@model YouPlay2019.Models.AlunoViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header>
+    <h2 class="text-center">Cadastro de Alunos</h2>
+</header>
+<section>
+    <form asp-action="Salvar" enctype="multipart/form-data">
+        <div class="form-group">
+            <div class="row">
+                <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+                @if (ViewBag.Operacao == "A")
+                {
+                    <input asp-for="Codigo" type="hidden" />
+                }
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <div class="mb-2">
+                        <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImageBase64" width="200" alt="Thumbnail Image" />
+                    </div>
+                    <div class="mb-2">
+                        <label asp-for="Imagem" class="btn btn-primary round-custom">Carregar arquivo</label>
+                        <input asp-for="Imagem" type="file" onchange="verImagem()" class="btn btn-secondary round-custom" hidden />
+                        <span asp-validation-for="Imagem" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Nome" class="text-black-50">Nome</label>
+                    <input asp-for="Nome" type="text" class="form-control round-custom" placeholder="Insira o nome do aluno" required />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="DataNascimento" class="text-black-50">Data nascimento</label>
+                    <input asp-for="DataNascimento" type="date" class="form-control round-custom" placeholder="dd/mm/yyyy" required />
+                    <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Rg" class="text-black-50">RG</label>
+                    <input asp-for="Rg" type="number" class="form-control round-custom" placeholder="Apenas os números do RG" maxlength="9" required />
+                    <span asp-validation-for="Rg" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Cpf" class="text-black-50">CPF</label>
+                    <input asp-for="Cpf" type="number" class="form-control round-custom" placeholder="Apensa os números do CPf" maxlength="11" required />
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Genero" class="text-black-50">Genero</label>
+                    <select asp-for="Genero" asp-items="@(new SelectList(ViewBag.Genero, "Codigo", "Descricao"))" class="form-control round-custom" required></select>
+                    <span asp-validation-for="Genero" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Telefone" class="text-black-50">Telefone</label>
+                    <input asp-for="Telefone" type="tel" placeholder="xx xxxx-xxxx" class="form-control round-custom" required />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="Email" class="text-black-50">Email</label>
+                    <input asp-for="Email" type="email" placeholder="exemplo@exemplo.com" class="form-control round-custom" required />
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="CodigoStatus" class="text-black-50">Status</label>
+                    <select asp-for="CodigoStatus" asp-items="@(new SelectList(ViewBag.StatusAluno, "Codigo", "Descricao"))" class="form-control round-custom" required></select>
+                    <span asp-validation-for="CodigoStatus" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Cep" class="text-black-50">CEP</label>
+                    <input asp-for="Cep" type="number" id="cep" placeholder="Apenas números" maxlength="8" class="form-control round-custom" required />
+                    <span asp-validation-for="Cep" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <button type="button" class="btn btn-primary round-custom" id="btn_pesquisar_cep" onclick="pesquisacep(cep.value)">Pesquisar</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-2">
+                    <label asp-for="Rua" class="text-black-50">Rua</label>
+                    <input asp-for="Rua" type="text" id="rua" class="form-control round-custom" required readonly />
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Numero" class="text-black-50">Número</label>
+                    <input asp-for="Numero" type="number" id="numero" class="form-control round-custom" required />
+                    <span asp-validation-for="Numero"></span>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <label asp-for="Bairro" class="text-black-50">Bairro</label>
+                    <input asp-for="Bairro" type="text" id="bairro" class="form-control round-custom" required readonly />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label asp-for="Cidade" class="text-black-50">Cidade</label>
+                    <input asp-for="Cidade" type="text" id="cidade" class="form-control round-custom" required readonly />
+                </div>
+                <div class="col-md-2 mb-2">
+                    <label asp-for="Estado" class="text-black-50">Estado</label>
+                    <input asp-for="Estado" type="text" id="estado" class="form-control round-custom" required readonly />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label asp-for="CodigoEscolaridade" class="text-black-50">Escolaridade</label>
+                    <select asp-for="CodigoEscolaridade" asp-items="@(new SelectList(ViewBag.EscolaridadeAluno, "Codigo", "Descricao"))" class="form-control round-custom" required></select>
+                    <span asp-validation-for="CodigoEscolaridade" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mt-2 mb-2">
+                    <h3>Responsável</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 mb-2">
+                    <label asp-for="NomeResponsavel" class="text-black-50">Nome</label>
+                    <input asp-for="NomeResponsavel" type="text" class="form-control round-custom" />
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label asp-for="CodigoVinculoResponsavel" class="text-black-50">Vinculo com Aluno</label>
+                    <select asp-for="CodigoVinculoResponsavel" asp-items="@(new SelectList(ViewBag.VinculoAlunoResponsavel, "Codigo", "Descricao"))" class="form-control round-custom"></select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label asp-for="RgResponsavel" class="text-black-50">RG</label>
+                    <input asp-for="RgResponsavel" type="number" class="form-control round-custom" placeholder="Apenas números" />
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label asp-for="CpfResponsavel" class="text-black-50">CPF</label>
+                    <input asp-for="CpfResponsavel" type="number" class="form-control round-custom" placeholder="Apenas números" />
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label asp-for="TelefoneResponsavel" class="text-black-50">Telefone do Responsável</label>
+                    <input asp-for="TelefoneResponsavel" type="tel" class="form-control round-custom" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Salvar dados" class="btn btn-primary round-custom" />
+                </div>
+            </div>
+
+            @if (ViewBag.Erro != null)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="text-danger">@ViewBag.Erro</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </form>
+</section>
+

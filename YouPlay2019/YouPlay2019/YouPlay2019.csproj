@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Imagens\001img.jpg" />
+    <None Include="wwwroot\Imagens\002img.jpg" />
+    <None Include="wwwroot\Imagens\003img.jpg" />
+    <None Include="wwwroot\Imagens\004img.jpg" />
+    <None Include="wwwroot\Imagens\apple-icon.png" />
+    <None Include="wwwroot\Imagens\avatar.jpg" />
+    <None Include="wwwroot\Imagens\bg1.jpg" />
+    <None Include="wwwroot\Imagens\bg11.jpg" />
+    <None Include="wwwroot\Imagens\bg3.jpg" />
+    <None Include="wwwroot\Imagens\bg4.jpg" />
+    <None Include="wwwroot\Imagens\bg5.jpg" />
+    <None Include="wwwroot\Imagens\bg6.jpg" />
+    <None Include="wwwroot\Imagens\bg7.jpg" />
+    <None Include="wwwroot\Imagens\bg8.jpg" />
+    <None Include="wwwroot\Imagens\blurred-image-1.jpg" />
+    <None Include="wwwroot\Imagens\creative-tim-white-slim2.png" />
+    <None Include="wwwroot\Imagens\default-avatar.png" />
+    <None Include="wwwroot\Imagens\eva.jpg" />
+    <None Include="wwwroot\Imagens\favicon.png" />
+    <None Include="wwwroot\Imagens\header.jpg" />
+    <None Include="wwwroot\Imagens\hero-image-1.png" />
+    <None Include="wwwroot\Imagens\hero-image-2.png" />
+    <None Include="wwwroot\Imagens\hero-image-3.png" />
+    <None Include="wwwroot\Imagens\invision-white-slim.png" />
+    <None Include="wwwroot\Imagens\julie.jpg" />
+    <None Include="wwwroot\Imagens\landing.jpg" />
+    <None Include="wwwroot\Imagens\login.jpg" />
+    <None Include="wwwroot\Imagens\logo-square.jpg" />
+    <None Include="wwwroot\Imagens\logo.png" />
+    <None Include="wwwroot\Imagens\now-logo.png" />
+    <None Include="wwwroot\Imagens\nucleo-logo.svg" />
+    <None Include="wwwroot\Imagens\pianobg.jpg" />
+    <None Include="wwwroot\Imagens\profile.jpg" />
+    <None Include="wwwroot\Imagens\ryan.jpg" />
+    <None Include="wwwroot\Imagens\Saxlogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>

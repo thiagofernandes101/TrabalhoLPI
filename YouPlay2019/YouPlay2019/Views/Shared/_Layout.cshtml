@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Escola de música YouplaY</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <link rel="icon" href="~/Imagens/favicon.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Imagens/apple-icon.png" />
+
+    <script type="text/javascript" src="~/js/cep.js"></script>
+</head>
+<body class="layout-background">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-transparente mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/Imagens/Saxlogo.png" height="60" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="color: black"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 nav-pills justify-content-end">
+                        <li class="nav-item dropdown mr-3">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Alunos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                                <a class="dropdown-item" asp-controller="Aluno" asp-action="Index">Cadastrar Aluno</a>
+                                <a class="dropdown-item" asp-controller="Aluno" asp-action="Consulta">Consultar Aluno</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-3">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Professores
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                                <a class="dropdown-item" asp-controller="Professor" asp-action="Index">Cadastrar Professor</a>
+                                <a class="dropdown-item" asp-controller="Professor" asp-action="Consulta">Consultar Professor</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown mr-3">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Disciplinas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                                <a class="dropdown-item" asp-controller="Disciplina" asp-action="Index">Cadastrar Disciplina</a>
+                                <a class="dropdown-item" asp-controller="Disciplina" asp-action="Consulta">Consultar Disciplina</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active btn" asp-area="" asp-controller="Login" asp-action="Logout">
+                                <i class="far fa-user"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container p-2">
+        <div class="card">
+            <div class="card-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-muted bg-dark">
+        <div class="container text-white">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                &copy; 2019 - YouPlay2019 - Code by Marcelo & Thiago
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-facebook-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fab fa-twitter-square"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-instagram"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#"><i class="fab fa-lg fa-github-square"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

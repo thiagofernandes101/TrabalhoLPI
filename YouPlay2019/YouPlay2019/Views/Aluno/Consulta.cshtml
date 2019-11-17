@@ -1,0 +1,94 @@
+﻿@model List<YouPlay2019.Models.AlunoViewModel>
+
+@{
+    ViewData["Title"] = "Consulta";
+}
+
+<header>
+    <h2 class="text-center">Consulta de Alunos</h2>
+</header>
+
+<form asp-action="Pesquisar" method="post">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <label for="Codigo" class="text-black-50">Código</label>
+                <input id="Codigo" name="Codigo" type="number" class="form-control round-custom" />
+            </div>
+            <div class="col-md-3 mb-2">
+                <label for="Nome" class="text-black-50">Nome</label>
+                <input id="Nome" name="Nome" type="text" class="form-control round-custom" />
+            </div>
+            <div class="col-md-3 mb-2">
+                <label for="DataMatricula" class="text-black-50">Data de matrícula</label>
+                <input id="DataMatricula" name="DataMatricula" type="date" class="form-control round-custom" />
+            </div>
+            <div class="col-md-3 mb-2">
+                <label for="Disciplina" class="text-black-50">Disciplina</label>
+                <input id="Disciplina" name="Disciplina" type="text" class="form-control round-custom" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 mb-2">
+                <input type="submit" value="Pesquisar" class="btn btn-primary round-custom" />
+            </div>
+        </div>
+
+        @if (ViewBag.Erro != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="text-danger">@ViewBag.Erro</span>
+                </div>
+            </div>
+        }
+    </div>
+</form>
+
+@if (Model == null && ViewBag.Erro == null)
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="text-danger">
+                    Nenhum dado encontrado
+                </span>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="table-responsive-lg">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data de matrícula</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Disciplina</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">@item.Codigo</th>
+                        <td>@item.Nome</td>
+                        <td>@item.DataMatricula</td>
+                        <td>@item.CodigoStatus</td>
+                        <td>@item.DescricaoDisciplina</td>
+                        <td>
+                            <a href="javascript:editarAluno(@item.Codigo)">Editar</a> |
+                            <a href="javascript:apagarAluno(@item.Codigo)">Apagar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

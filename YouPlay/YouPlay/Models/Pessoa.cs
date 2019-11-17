@@ -44,43 +44,25 @@ namespace YouPlay.Models
         /// <summary>
         /// Imagem recebida do form pelo controller
         /// </summary>
-        public string Imagem { get; set; }
-
-        /// <summary>
-        /// Imagem em bytes pronta para ser salva
-        /// </summary>
-        //public byte[] ImagemEmByte { get; set; }
-
-        /// <summary>
-        /// Imagem usada para ser enviada ao form no formato para ser exibida
-        /// </summary>
-        //public string ImagemEmBase64
-        //{
-        //    get
-        //    {
-        //        if (ImagemEmByte != null)
-        //            return Convert.ToBase64String(ImagemEmByte);
-        //        else
-        //            return string.Empty;
-        //    }
-        //}
+        [Required(ErrorMessage = "Inserir uma imagem")]
+        public IFormFile Imagem { get; set; }
 
         public string ImageBase64 { get; set; }
 
-        public void ImageByte()
+        public byte[] ImageByte()
         {
-            //if (Imagem != null)
-            //{
-            //    using (var ms = new MemoryStream())
-            //    {
-            //        Imagem.CopyTo(ms);
-            //        return ms.ToArray();
-            //    }
-            //}
-            //else
-            //{
-            //    return null;
-            //}
+            if (Imagem != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    Imagem.CopyTo(ms);
+                    return ms.ToArray();
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
