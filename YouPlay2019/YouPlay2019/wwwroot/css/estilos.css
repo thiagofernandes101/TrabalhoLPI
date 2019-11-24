@@ -1,0 +1,29 @@
+﻿body {
+    font-family: Verdana;
+}
+
+#TabelaID {
+    width: 100%;
+    border: solid 1px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+    #TabelaID tbody tr {
+        border: solid 1px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    #TabelaID thead {
+        background: beige;
+    }
+
+        #TabelaID thead th:nth-child(1) {
+            width: 100px;
+        }
+
+    #TabelaID input {
+        color: navy;
+        width: 100%;
+    }
